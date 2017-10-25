@@ -5,11 +5,11 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 16:03:33
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-10-22 17:04:14
+# @Last Modified time: 2017-10-24 22:00:01
 """
 Descripition:
-	const moudle
-	rule:
+	 const moudle
+	 rule:
 		Const name must be all uppercase
 		Const value cannot be modified
 Change Activity:
