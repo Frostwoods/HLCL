@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 14:35:37
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-10-23 19:08:53
+# @Last Modified time: 2017-11-21 20:02:46
 """
 Descripition:
 	part of Generative model for character
@@ -30,7 +30,7 @@ Change Activity:
 
 
 """
-
+"""
 κ = Sample_from_distribution('k')
 
 for x in xrange(1,k):
@@ -46,3 +46,52 @@ for x in xrange(1,k):
 
 
 return φ
+"""
+
+class Generate_Type(object):
+	"""docstring for Generate_Type"""
+	def __init__(self):
+		self.Kappa = Sample_kappa()
+
+	def __call__(self):	
+		self.Generate_wrap()
+		return Type_Integrate()
+
+
+	def Generate_wrap(self,Sample_SubstorkesNum,Generate_Stroke,Sample_Relationid,Generate_Relation):
+		for i in xrange(1,self.Kappa):
+
+			self.n(i) = Sample_SubstorkesNum(self.Kappa)
+
+			self.Storke(i) = Generate_Stroke(i,self.n(i))
+
+			self.Xi(i) = Sample_Relationid()
+
+			self.RelationSet(i) = Generate_Relation(Xi(i), self.Storke , i-1)
+
+
+
+
+	def Type_Integrate(self):
+		Type_phi={}
+		Type_phi['storekesnum']=self.Kappa
+		Type_phi['relations']=self.RelationSet
+		Type_phi['strokes']=self.Storke
+		return Type_phi
+				
+"""
+Kappa = Sample_kappa()
+
+for i in xrange(1,Kappa)
+
+	self.n(i) = Sample_SubstorkesNum(Kappa)
+
+	self.Storke(i) = Generate_Stroke(i,n(i))
+
+	self.Xi(i) = Sample_Relationid()
+
+	self.RelationSet(i) = Generate_Relation(Xi(i), Relation)
+
+
+Type_phi = Type_Integrate(Kappa, Relation， Storke)  
+"""
