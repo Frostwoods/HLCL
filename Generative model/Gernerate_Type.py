@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 14:35:37
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-11-21 20:02:46
+# @Last Modified time: 2017-12-22 10:34:35
 """
 Descripition:
 	part of Generative model for character
@@ -37,7 +37,7 @@ for x in xrange(1,k):
 
 	n(x) = Sample_from_distribution('n(x)|k')
 
-	S(x) = Generate_Stroke(x, n(x))
+	S(x) = self.Generate_Stroke(x, n(x))
 
 	ξ(x) = Sample_from_distribution('ξ')
 
@@ -47,37 +47,66 @@ for x in xrange(1,k):
 
 return φ
 """
+import sys
+sys.path.append('F:\Code\Matlab\HLCL')
+from Generative model.Generate_Stroke import *
+from Generative model.Generate_Relation import *
+from sample.Sample_kappa import *
+from sample.Sample_SubstrokesNum import *
+from sample.Sample_Relationid import *
 
 class Generate_Type(object):
 	"""docstring for Generate_Type"""
-	def __init__(self):
-		self.Kappa = Sample_kappa()
+	def __init__(self,typepara_dict):
+		typepara_dict['']
 
-	def __call__(self):	
-		self.Generate_wrap()
-		return Type_Integrate()
+		self.Generate_Stroke=Generate_Stroke()
+		self.Generate_Relation=Generate_Relation()
+		self.Sample_kappa=Sample_kappa()
+		self.Sample_SubstrokesNum=Sample_SubstrokesNum()
+		self.Sample_Relationid=Sample_Relationid()
+		pass
+				
+	def __call__(self,Kappa):
+		if Kappa is None	
+			Kappa = self.Sample_kappa()
+			
+		n=[]
+		Storke =[] 
+		Xi = []
+		RelationSet=[]
 
+		for i in range(Kappa):
+			#lst con查看是否分离 查一下Reduce
+			n.append(self.Sample_SubstorkesNum(self.Kappa))
 
-	def Generate_wrap(self,Sample_SubstorkesNum,Generate_Stroke,Sample_Relationid,Generate_Relation):
-		for i in xrange(1,self.Kappa):
+			Storke.append([self.Generate_Stroke(i,self.n[i])])
 
-			self.n(i) = Sample_SubstorkesNum(self.Kappa)
+			Xi.append(self.Sample_Relationid())
 
-			self.Storke(i) = Generate_Stroke(i,self.n(i))
+			RelationSet.append( [self.Generate_Relation(Xi[i],Storke,i)])
+		
+		return {'storekesnum'=Kappa,'relations'=RelationSet,'strokes'=Storke}
 
-			self.Xi(i) = Sample_Relationid()
+'''
+	def Generate_wrap(self,Kappa):
+		#,Sample_SubstorkesNum,self.Generate_Stroke,Sample_Relationid,Generate_Relation
+		n=[]
+		Storke =[] 
+		Xi = []
+		RelationSet=[]
+		for i in range(Kappa):
 
-			self.RelationSet(i) = Generate_Relation(Xi(i), self.Storke , i-1)
+			self.n += self.Sample_SubstorkesNum(self.Kappa)
 
+			self.Storke += [self.Generate_Stroke(i,self.n[i])]
 
+			self.Xi += self.Sample_Relationid()
 
+			self.RelationSet += [self.Generate_Relation(Xi[i], self.Storke , i)]
+		return n,Storke,Xi,RelationSet
 
-	def Type_Integrate(self):
-		Type_phi={}
-		Type_phi['storekesnum']=self.Kappa
-		Type_phi['relations']=self.RelationSet
-		Type_phi['strokes']=self.Storke
-		return Type_phi
+'''
 				
 """
 Kappa = Sample_kappa()
@@ -86,7 +115,7 @@ for i in xrange(1,Kappa)
 
 	self.n(i) = Sample_SubstorkesNum(Kappa)
 
-	self.Storke(i) = Generate_Stroke(i,n(i))
+	self.Storke(i) = self.Generate_Stroke(i,n(i))
 
 	self.Xi(i) = Sample_Relationid()
 

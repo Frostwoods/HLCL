@@ -5,18 +5,18 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 19:25:54
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-11-21 20:02:46
+# @Last Modified time: 2017-12-22 01:59:22
 """
 Descripition:
 	Sample stroke
 
 	Input:
-		serial number :i
-		number of substrokes : ni
-		unkown,
+		serial number :i [int]
+		number of substrokes : ni [int]
+		
 
 	Output:
-		Si = {Si1, ……, Sini}
+		Si: [ni_list of dict]
 
 
 
@@ -25,64 +25,54 @@ Change Activity:
 
 
 """
-'''
-zi(1) = Sample_from_distribution（'zi'）
+import sys
+sys.path.append('F:\Code\Matlab\HLCL')
 
-for j in xrange(2, ni):
-    zi(j) = Sample_from_distribution('zij|zi(j-1)')
+from sample.Sample_Controlpoints import *
+from sample.Sample_Scale import *
+from sample.Sample_FirstSubstrokesid import *
+from sample.Sample_Substrokesid import *
 
-for k in xrange(1, ni):
-    xi(k) = Sample_from_distribution（'xik|zik'）
-    yi(k) = Sample_from_distribution（'yik|zik'）
-    si(k) = {xi(k), yi(k), zi(k)}
 
-si = {si(1), ……, si(ni)}
-
-stroke_dict={'substorekesnum_int':,'sbustrokes_list':}
-substrokes_dict={'substrokesid_int': SubstrokesID,'control_x_array':substrokes_control_x,'scale_y':substrokes_Scale_y,}            
-       # return Storke_Integrate()
-        
-'''
 class Generate_Stroke(object):
     """docstring for Generate_Sr"""
-
     def __init__(self, arg):
-        pass
+        self.Generate_Substrokes_ID=Generate_Substrokes_ID()
+        self.Sample_Controlpoints=Sample_Controlpoints()
+        self.Sample_Scale=Sample_Scale()
 
     def __call__(self, id, substrokes_num):
-        Generate_Substrokes_ID=Generate_Substrokes_ID()
-        SubstrokesID(1) = Generate_Substrokes_ID()
-        for i in range(2, substrokes_num + 1):
-            SubstrokesID(i) = Generate_Substrokes_ID(SubstrokesID(i - 1))
-        for i in range(1, substrokes_num + 1):
-            substrokes_control_x(i)= Sample_Controlpoints(SubstrokesID(i))
-            substrokes_Scale_y(i) = Sample_Scale(SubstrokesID(i))
-            substrokes_dictlist(i)={'substrokesid_int': SubstrokesID(i),'control_x_array':substrokes_control_x(i),'scale_y':substrokes_Scale_y(i)}
-        
-        return {'substorekesnum_int':substrokes_num,'sbustrokes_list':substrokes_dictlist}            
-       # return Storke_Integrate()
-    '''
-    def Storke_Integrate(self):
-        Storke={}
-        Storke['SubstrokesID']=
-        Storke['control_x']=
-        Storke['Scale_y']=
+        SubstrokesID=[]
+        substrokes_control_x=[]
+        substrokes_Scale_y=[]
+        substrokes_dictlist[]
 
-        return Storke
-        '''
+        SubstrokesID += self.Generate_Substrokes_ID()
+        for i in range(1, substrokes_num):
+            SubstrokesID += self.Generate_Substrokes_ID(SubstrokesID[i - 1])
+        
+        for i in range(substrokes_num):
+            substrokes_control_x += self.Sample_Controlpoints(SubstrokesID[i])
+            substrokes_Scale_y += self.Sample_Scale(SubstrokesID[i])
+            substrokes_dictlist +=[{'substrokesid_int': SubstrokesID(i),'control_x_array':substrokes_control_x(i),'scale_y':substrokes_Scale_y(i)}]
+        
+        return {'substorekesnum_int':substrokes_num,'sbustrokes_list':substrokes_dictlist} 
 
 class Generate_Substrokes_ID(object):
     """docstring for Generate_Substrokes_ID"""
 
     def __init__(self):
-        pass
-        #super(Generate_Substrokes_ID, self).__init__()
-        #self.arg = arg
+        self.Sample_FirstSubstrokesid=Sample_FirstSubstrokesid()
+        self.Sample_Substrokesid=Sample_Substrokesid()
 
     def __call__(self, formerid=None):
-
         if formerid is None:
             current_id = Sample_FirstSubstrokesid()
         else:
             current_id = Sample_Substrokesid(formerid)
         return current_id
+
+
+
+
+        

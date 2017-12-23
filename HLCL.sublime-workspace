@@ -4,8 +4,76 @@
 		"selected_items":
 		[
 			[
+				"b",
+				"b-spline"
+			],
+			[
+				"sample_",
+				"sample_uniformreal"
+			],
+			[
+				"S",
+				"sample_multigaussian\tmodule"
+			],
+			[
+				"Ga",
+				"Gaussian\tmodule"
+			],
+			[
+				"g",
+				"Gamma"
+			],
+			[
+				"multi",
+				"multinomial\tstatement"
+			],
+			[
+				"s",
+				"Sample_Substrokesid\tmodule"
+			],
+			[
+				"main",
+				"main"
+			],
+			[
+				"class",
+				"class\tNew Class"
+			],
+			[
+				"Ge",
+				"Generate_Startlocation"
+			],
+			[
+				"Genre",
+				"Generate_binaryimages_img"
+			],
+			[
+				"m",
+				"mean\tstatement"
+			],
+			[
+				"E",
+				"Eposilon\tstatement"
+			],
+			[
+				"ge",
+				"Generate_Token\tclass"
+			],
+			[
+				"y",
+				"var_scale_y"
+			],
+			[
+				"x",
+				"var_control_x_array"
+			],
+			[
+				"calss",
+				"class\tNew Class"
+			],
+			[
 				"i",
-				"i\tstatement"
+				"independentmat_p_array\tstatement"
 			],
 			[
 				"None",
@@ -56,10 +124,6 @@
 				"maxnumber\tparam"
 			],
 			[
-				"x",
-				"x\tstatement"
-			],
-			[
 				"p",
 				"probalilities\tstatement"
 			],
@@ -80,71 +144,63 @@
 	"buffers":
 	[
 		{
+			"file": "Generative model/Gernerate_Type.py",
+			"settings":
+			{
+				"buffer_size": 2424,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "demo/generator_demo.py",
+			"settings":
+			{
+				"buffer_size": 791,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "framework/Framework_CharacterType.py",
 			"settings":
 			{
-				"buffer_size": 935,
+				"buffer_size": 967,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "# -*- coding: utf-8 -*-\n# @Poroject Name: .\n# @File Name: Generate_Relation.py\n# @Author: Yang Zhao\n# @Emial: frostwoods@foxmail.com\n# @Date:   2017-10-27 00:11:48\n# @Last Modified by:   Yang Zhao\n# @Last Modified time: 2017-11-21 20:23:34\n\"\"\"\nDescripition:\n\tFour relation types\n\t\tIndependent; ???\n\t\t\tJi;  multinomial on 2D\n\t\t\tLi\n\n\t\tStart;\n\t\t\tmu pre strokes uniform\n\n\t\tEnd;\n\t\t\tmu uniform\n\n\t\tAlong\n\t\t\tmu uiniform\n\t\t\tnu  presubstrokes uniform\n\t\t\ttau ?? type-level spline coordinate\n\n\nChange Activity:\n\n\n\n\"\"\"\nfrom scipy.stats import randint\nrandint.rvs(1, 3, loc=0, size=1, random_state=None)\n\nclass Generate_Relation():\n    \"\"\"relation id  multinomial\"\"\"\n    # then sample parameter given relation\n\n    def __init__(self):\n        pass\n\n    def __call__(self, xi, Stroke_Set, num):\n    \tRelation_Dict={'relationid':None,'relationpara':None}\n        self.num=num\n        self.Stroke_Set=Stroke_Set\n    \tif xi == 1:\n    \t\tpara=self.Gen_Indepentrelation()\n    \telif xi == 2:\n    \t\tpara=self.Gen_Startrelation()\n    \telif xi == 3:\n    \t\tpara=self.Gen_Endrelation()\n\t    elif xi == 4:\n\t    \tpara=self.Gen_Alongrelation()\n    \telse:\n    \t\tprint \"wrong relation \"\n    \tRelation_Dict['relationid']=xi;\n    \tRelation_Dict['relationpara']=para;\n        return Relation_Dict\n    def Gen_Indepentrelation(self):\n    \t#2dim multi\n\n    \treturn\n\n    def Gen_Startrelation(self):\n    \t# uniform \n    \treturn randint.rvs(1, self.num)\n\n    def Gen_Endrelation(self):\n    \t# uniform\n    \treturn randint.rvs(1, self.num)\n\n    def Gen_Alongrelation(self):\n    \t# uniform s subS typelevel coor\n        mu=randint.rvs(1, self.num)\n        nu=randint.rvs(1,self.Stroke_Set(mu)['substorekesnum_int']+1)\n        tho=randint.rvs(1,6)\n        #Stroke_Set(mu)['sbustrokes_list'](nu)['control_x_array'](tho)\n\n    \treturn (mu,nu,tho)\n ",
-			"file": "Generative model/Generate_Relation.py",
-			"file_size": 1874,
-			"file_write_time": 131557406141984917,
+			"file": "framework/paralist.py",
 			"settings":
 			{
-				"buffer_size": 1802,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "# -*- coding: utf-8 -*-\n# @Poroject Name: .\n# @File Name: Framework_CharacterToken.py\n# @Author: Yang Zhao\n# @Emial: frostwoods@foxmail.com\n# @Date:   2017-11-19 21:06:51\n# @Last Modified by:   Yang Zhao\n# @Last Modified time: 2017-11-19 22:07:56\n\"\"\"\nDescripition:\n\n\n\nChange Activity:\n\n\n\n\"\"\"\nTypelevel\ncharactertype_dict={'storekesnum':Int,'relations':relations_list,'strokes':strokes_list}\n\nrelations_list=[relation_dict,…，] \nrelation_dict={'relationid'：None，'relationpara':None}\n\nstrokes_list=[stroke_dict_1，……，stroke_dict_k]\nstroke_dict={'substorekesnum_int':,'sbustrokes_list':}\nsubstrokes_dict={'substrokesid_int': SubstrokesID,'control_x_array':substrokes_control_x,'scale_y':substrokes_Scale_y,}            \n       # return Storke_Integrate()\n\n\nTokenlevel\n\ncharactertoken_dict={'stratlocation':None,'control_x_array_m':None,'scale_y_m':None，\n\t\t\t\t\t'stroke_trajectory':None,'relation_m':None,\t'image_transformation_A':None，\t\n\t\t\t\t\t'gaussian_filter_blurring':sigma,'bernoulli_flips':epsilon\t\n\t\t\t\t\t}\\\n\n",
-			"file": "framework/Framework_CharacterToken.py",
-			"file_size": 1006,
-			"file_write_time": 131555740770055091,
-			"settings":
-			{
-				"buffer_size": 1004,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "distribution/Uniform/Sample_Uniform.py",
-			"settings":
-			{
-				"buffer_size": 1301,
+				"buffer_size": 586,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "distribution/Multi_Gaussian/sample_multigausssian.py",
+			"file": "sample/Sample_Substrokesid.py",
 			"settings":
 			{
-				"buffer_size": 1376,
+				"buffer_size": 1286,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Generative model/Generate_Startlocation.py",
+			"settings":
+			{
+				"buffer_size": 1323,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "\n\n  test \n\n\nWeek I Nov.20-Nov26\n\tthe frame (Input Output , function) undone:learning infer visual\n\tType level\nWeek II Nov.27-Dec.3\n\tToke level\n\t\nWeek III Dec.4-Dec.10\n\tlearning &visual\n\nWeek IV Dec.11-Dec.17\n    infer\nWeek V Dec.18-Dec.24\n\n\tfinish a demo\n\n\n具体实例\t",
-			"file": "framework/project_time_frame.md",
-			"file_size": 261,
-			"file_write_time": 131559593007782633,
+			"file": "framework/log.py",
 			"settings":
 			{
-				"buffer_size": 262,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "distribution/Multinomial/Sample_Multinomial.py",
-			"settings":
-			{
-				"buffer_size": 2422,
+				"buffer_size": 582,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -153,65 +209,97 @@
 			"file": "blackboard.py",
 			"settings":
 			{
-				"buffer_size": 995,
+				"buffer_size": 967,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "# -*- coding: utf-8 -*-\n# @Poroject Name: HLCL\n# @File Name: Generate_Stroke.py\n# @Author: Yang Zhao\n# @Emial: frostwoods@foxmail.com\n# @Date:   2017-10-22 19:25:54\n# @Last Modified by:   Yang Zhao\n# @Last Modified time: 2017-11-21 20:02:46\n\"\"\"\nDescripition:\n\tSample stroke\n\n\tInput:\n\t\tserial number :i\n\t\tnumber of substrokes : ni\n\t\tunkown,\n\n\tOutput:\n\t\tSi = {Si1, ……, Sini}\n\n\n\nChange Activity:\n\t10.22 add pseudo code(undone) by Yang Zhao\n\n\n\"\"\"\n'''\nzi(1) = Sample_from_distribution（'zi'）\n\nfor j in xrange(2, ni):\n    zi(j) = Sample_from_distribution('zij|zi(j-1)')\n\nfor k in xrange(1, ni):\n    xi(k) = Sample_from_distribution（'xik|zik'）\n    yi(k) = Sample_from_distribution（'yik|zik'）\n    si(k) = {xi(k), yi(k), zi(k)}\n\nsi = {si(1), ……, si(ni)}\n\nstroke_dict={'substorekesnum_int':,'sbustrokes_list':}\nsubstrokes_dict={'substrokesid_int': SubstrokesID,'control_x_array':substrokes_control_x,'scale_y':substrokes_Scale_y,}            \n       # return Storke_Integrate()\n        \n'''\nclass Generate_Stroke(object):\n    \"\"\"docstring for Generate_Sr\"\"\"\n\n    def __init__(self, arg):\n        pass\n\n    def __call__(self, id, substrokes_num):\n        Generate_Substrokes_ID=Generate_Substrokes_ID()\n        SubstrokesID(1) = Generate_Substrokes_ID()\n        for i in range(2, substrokes_num + 1):\n            SubstrokesID(i) = Generate_Substrokes_ID(SubstrokesID(i - 1))\n        for i in range(1, substrokes_num + 1):\n            substrokes_control_x(i)= Sample_Controlpoints(SubstrokesID(i))\n            substrokes_Scale_y(i) = Sample_Scale(SubstrokesID(i))\n            substrokes_dictlist(i)={'substrokesid_int': SubstrokesID(i),'control_x_array':substrokes_control_x(i),'scale_y':substrokes_Scale_y(i)}\n        \n        return {'substorekesnum_int':substrokes_num,'sbustrokes_list':substrokes_dictlist}            \n       # return Storke_Integrate()\n    '''\n    def Storke_Integrate(self):\n        Storke={}\n        Storke['SubstrokesID']=\n        Storke['control_x']=\n        Storke['Scale_y']=\n\n        return Storke\n        '''\n\nclass Generate_Substrokes_ID(object):\n    \"\"\"docstring for Generate_Substrokes_ID\"\"\"\n\n    def __init__(self):\n        pass\n        #super(Generate_Substrokes_ID, self).__init__()\n        #self.arg = arg\n\n    def __call__(self, formerid=None):\n\n        if formerid is None:\n            current_id = Sample_FirstSubstrokesid()\n        else:\n            current_id = Sample_Substrokesid(formerid)\n        return current_id\n\n\n\n\n        ",
+			"file": "Generative model/Generate_Token.py",
+			"settings":
+			{
+				"buffer_size": 2824,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "Generative model/Generate_Stroke.py",
-			"file_size": 2555,
-			"file_write_time": 131557393661297821,
 			"settings":
 			{
-				"buffer_size": 2459,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "sample/Sample_FirstSubstrokesid.py",
-			"settings":
-			{
-				"buffer_size": 648,
+				"buffer_size": 2161,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "# -*- coding: utf-8 -*-\n# @Poroject Name: HLCL\n# @File Name: Gernerate_Type.py\n# @Author: Yang Zhao\n# @Emial: frostwoods@foxmail.com\n# @Date:   2017-10-22 14:35:37\n# @Last Modified by:   Yang Zhao\n# @Last Modified time: 2017-11-21 20:02:46\n\"\"\"\nDescripition:\n\tpart of Generative model for character\n\ttype level\n\tGenerate a new character type\n\n\tInput:\n\t\tunkown\n\n\tOutput:\n\t\tCharacter type\n\t\tφ = {κ, S, R}\n\t\tκ: number of strokes\n\t\tS: strokes {S1, ……, Sκ}\n\t\tR: relations between strokes {R1, ……, Rκ}\n\nUsage:\n\n\nChange Activity:\n\t10.22 add pseudo code(undone) by Yang Zhao\n\n\n\"\"\"\n\"\"\"\nκ = Sample_from_distribution('k')\n\nfor x in xrange(1,k):\n\n\tn(x) = Sample_from_distribution('n(x)|k')\n\n\tS(x) = Generate_Stroke(x, n(x))\n\n\tξ(x) = Sample_from_distribution('ξ')\n\n\tR(x) = Sample_from_distribution('Ri|ξ, S1, ……, Sx')\nφ = {k, R, S}\n\n\nreturn φ\n\"\"\"\n\nclass Generate_Type(object):\n\t\"\"\"docstring for Generate_Type\"\"\"\n\tdef __init__(self):\n\t\tself.Kappa = Sample_kappa()\n\n\tdef __call__(self):\t\n\t\tself.Generate_wrap()\n\t\treturn Type_Integrate()\n\n\n\tdef Generate_wrap(self,Sample_SubstorkesNum,Generate_Stroke,Sample_Relationid,Generate_Relation):\n\t\tfor i in xrange(1,self.Kappa):\n\n\t\t\tself.n(i) = Sample_SubstorkesNum(self.Kappa)\n\n\t\t\tself.Storke(i) = Generate_Stroke(i,self.n(i))\n\n\t\t\tself.Xi(i) = Sample_Relationid()\n\n\t\t\tself.RelationSet(i) = Generate_Relation(Xi(i), self.Storke , i)\n\n\n\n\n\tdef Type_Integrate(self):\n\t\tType_phi={}\n\t\tType_phi['storekesnum']=self.Kappa\n\t\tType_phi['relations']=self.RelationSet\n\t\tType_phi['strokes']=self.Storke\n\t\treturn Type_phi\n\t\t\t\t\n\"\"\"\nKappa = Sample_kappa()\n\nfor i in xrange(1,Kappa)\n\n\tself.n(i) = Sample_SubstorkesNum(Kappa)\n\n\tself.Storke(i) = Generate_Stroke(i,n(i))\n\n\tself.Xi(i) = Sample_Relationid()\n\n\tself.RelationSet(i) = Generate_Relation(Xi(i), Relation)\n\n\nType_phi = Type_Integrate(Kappa, Relation， Storke)  \n\"\"\"\n",
-			"file": "Generative model/Gernerate_Type.py",
-			"file_size": 1954,
-			"file_write_time": 131557393663298137,
+			"file": "sample/Sample_Relationid.py",
 			"settings":
 			{
-				"buffer_size": 1830,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "framework/log.py",
-			"settings":
-			{
-				"buffer_size": 300,
+				"buffer_size": 935,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sample/Sample_kappa.py",
+			"file": "Generative model/Generate_binaryimages_img.py",
 			"settings":
 			{
-				"buffer_size": 617,
+				"buffer_size": 709,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sample/Sample_SubstrokesNum.py",
+			"file": "Generative model/Generate_Trajectory.py",
 			"settings":
 			{
-				"buffer_size": 715,
+				"buffer_size": 941,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sample/Sample_Transformationnumber.py",
+			"settings":
+			{
+				"buffer_size": 894,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sample/Sample_Gaufliter.py",
+			"settings":
+			{
+				"buffer_size": 611,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sample/Sample_Radomflips.py",
+			"settings":
+			{
+				"buffer_size": 621,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sample/addvar_controlpoint.py",
+			"settings":
+			{
+				"buffer_size": 873,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sample/addvar_scale.py",
+			"settings":
+			{
+				"buffer_size": 844,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -269,7 +357,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 565.0
+		"width": 459.0
 	},
 	"console":
 	{
@@ -290,15 +378,49 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Code/HLCL",
-		"/F/Code/HLCL/classes",
-		"/F/Code/HLCL/distribution",
-		"/F/Code/HLCL/framework",
-		"/F/Code/HLCL/Generative model",
-		"/F/Code/HLCL/Unassigned"
+		"/F/Code/Matlab/HLCL",
+		"/F/Code/Matlab/HLCL/classes",
+		"/F/Code/Matlab/HLCL/demo",
+		"/F/Code/Matlab/HLCL/framework",
+		"/F/Code/Matlab/HLCL/Generative model",
+		"/F/Code/Matlab/HLCL/Inference",
+		"/F/Code/Matlab/HLCL/RenderNvisualization",
+		"/F/Code/Matlab/HLCL/sample"
 	],
 	"file_history":
 	[
+		"/F/Code/Matlab/HLCL/sample/Sample_Controlpoints.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_Scale.py",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_Relation.py",
+		"/F/Code/Matlab/HLCL/sample/addvar_relation.py",
+		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_Startlocation.py",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_binaryimages_img.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_kappa.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_SubstrokesNum.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_Substrokesid.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_FirstSubstrokesid.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_Gaufliter.py",
+		"/F/Code/Matlab/HLCL/sample/Sample_Transformationnumber.py",
+		"/F/Code/Matlab/HLCL/sample/__init__.py",
+		"/F/Code/Matlab/HLCL/sample/__init__.py ",
+		"/F/Code/Matlab/HLCL/sample/addvar_scale.py",
+		"/F/Code/Matlab/HLCL/distribution/Multinomial/Sample_Multinomial.py",
+		"/F/Code/Matlab/HLCL/distribution/Uniform/Sample_Uniform.py",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_Token.py",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_Trajectory.py",
+		"/F/Code/Matlab/HLCL/sample/addvar_controlpoint.py",
+		"/F/DeskMirror/PPT（未整理）/development/2017冬/Orginal materials/Infer/reward_from_inference.ipynb",
+		"/F/Code/Matlab/HLCL/distribution/Multi_Gaussian/sample_multigaussian.py",
+		"/F/Code/Matlab/HLCL/framework/Framework_CharacterType.py",
+		"/F/Code/Matlab/HLCL/Unassigned/notebook.py",
+		"/F/Code/Matlab/HLCL/framework/Framework_CharacterToken.py",
+		"/F/Code/Matlab/HLCL/blackboard.py",
+		"/F/Code/Matlab/HLCL/Generative model/Gernerate_Type.py",
+		"/F/Code/Matlab/HLCL/Generative model/Generate_Stroke.py",
+		"/F/Code/Matlab/HLCL/framework/log.py",
+		"/F/Code/Matlab/HLCL/framework/project_time_frame.md",
+		"/F/Code/Matlab/HLCL/distribution/Multi_Gaussian/sample_multigausssian.py",
 		"/F/Code/HLCL/distribution/Uniform/Sample_Uniform.py",
 		"/F/Code/HLCL/framework/Framework_CharacterToken.py",
 		"/F/Code/HLCL/distribution/Multinomial/Sample_Multinomial.py",
@@ -352,7 +474,6 @@
 		"/F/Code/HLCL/test.m",
 		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/FileHeader/template/header/R.tmpl",
 		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/User/FileHeader.sublime-settings",
-		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/C/Python27/Lib/site-packages/sitecustomize.py",
 		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/SublimeCodeIntel/Default (Windows).sublime-keymap",
 		"/C/Users/Yang Zhao/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Default (Windows).sublime-keymap",
@@ -363,7 +484,7 @@
 	],
 	"find":
 	{
-		"height": 32.0
+		"height": 41.0
 	},
 	"find_in_files":
 	{
@@ -377,6 +498,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Sample_Relationid",
+			"Sample_SubstrokesNum",
+			"Sample_kappa",
+			"Generate_Relation",
+			"Generate_Stroke",
+			"distribution",
+			"m_relationset_list",
+			"Relation",
 			"set_max_numbers",
 			"）",
 			"（",
@@ -401,858 +530,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "framework/Framework_CharacterType.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 935,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								253,
-								267
-							]
-						],
-						"settings":
-						{
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								10,
-								24,
-								9,
-								9,
-								28,
-								6,
-								2,
-								243,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Generative model/Generate_Relation.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1802,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1377,
-								1377
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								10,
-								27,
-								0,
-								11,
-								48,
-								1,
-								21,
-								33,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 784.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "framework/Framework_CharacterToken.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1004,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								763,
-								763
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								19,
-								21,
-								6,
-								51,
-								2,
-								48,
-								27,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 291.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "distribution/Uniform/Sample_Uniform.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1301,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								313,
-								282
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								21,
-								19,
-								9,
-								22,
-								3,
-								36,
-								114,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 132.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "distribution/Multi_Gaussian/sample_multigausssian.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1376,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								261,
-								261
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								14,
-								19,
-								22,
-								49,
-								8,
-								88,
-								208,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				}
-			]
-		},
-		{
 			"selected": 0,
 			"sheets":
 			[
 				{
-					"buffer": 5,
-					"file": "framework/project_time_frame.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 262,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								262,
-								262
-							]
-						],
-						"settings":
-						{
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								19,
-								20,
-								51,
-								6,
-								5,
-								5,
-								56,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "distribution/Multinomial/Sample_Multinomial.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2422,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								445,
-								445
-							]
-						],
-						"settings":
-						{
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								3,
-								9,
-								47,
-								49,
-								11,
-								244,
-								123,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 264.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "blackboard.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 995,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								904,
-								955
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								10,
-								23,
-								19,
-								8,
-								28,
-								5,
-								43,
-								112,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 101.0,
-						"translation.y": 858.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Generative model/Generate_Stroke.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2459,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2459,
-								2459
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								10,
-								22,
-								19,
-								25,
-								54,
-								8,
-								44,
-								74,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1570.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "sample/Sample_FirstSubstrokesid.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 648,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								286,
-								286
-							]
-						],
-						"settings":
-						{
-							"c_time":
-							[
-								128,
-								3,
-								99,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								100,
-								97,
-								116,
-								101,
-								116,
-								105,
-								109,
-								101,
-								10,
-								113,
-								0,
-								67,
-								10,
-								7,
-								225,
-								11,
-								2,
-								9,
-								52,
-								46,
-								10,
-								252,
-								85,
-								113,
-								1,
-								133,
-								113,
-								2,
-								82,
-								113,
-								3,
-								46
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
+					"buffer": 0,
 					"file": "Generative model/Gernerate_Type.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1830,
+						"buffer_size": 2424,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1361,
-								1361
+								1998,
+								1998
 							]
 						],
 						"settings":
@@ -1319,27 +614,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1116.0,
+						"translation.y": 2737.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "framework/log.py",
+					"buffer": 1,
+					"file": "demo/generator_demo.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 300,
+						"buffer_size": 791,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								294,
-								294
+								791,
+								791
 							]
 						],
 						"settings":
@@ -1349,6 +644,445 @@
 								{
 									"characters": ".",
 									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								21,
+								21,
+								32,
+								13,
+								13,
+								216,
+								236,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 930.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "framework/Framework_CharacterType.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 967,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								582,
+								582
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								10,
+								24,
+								9,
+								9,
+								28,
+								6,
+								2,
+								243,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 465.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "framework/paralist.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 586,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								512,
+								512
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								22,
+								1,
+								9,
+								4,
+								3,
+								201,
+								73,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 837.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "sample/Sample_Substrokesid.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1286,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								494,
+								306
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								11,
+								2,
+								9,
+								53,
+								22,
+								9,
+								243,
+								73,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 776.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Generative model/Generate_Startlocation.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1323,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								404,
+								593
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								13,
+								4,
+								22,
+								3,
+								117,
+								24,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 992.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "framework/log.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								580,
+								582
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
 								},
 								{
 									"characters": ".",
@@ -1402,35 +1136,49 @@
 								3,
 								46
 							],
-							"open_with_edit": true,
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 744.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "sample/Sample_kappa.py",
+					"buffer": 7,
+					"file": "blackboard.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 617,
+						"buffer_size": 967,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								490,
-								490
+								951,
+								951
 							]
 						],
 						"settings":
 						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
 							"c_time":
 							[
 								128,
@@ -1460,14 +1208,14 @@
 								10,
 								7,
 								225,
-								11,
-								1,
 								10,
-								42,
-								41,
-								12,
-								35,
-								48,
+								23,
+								19,
+								8,
+								28,
+								5,
+								43,
+								112,
 								113,
 								1,
 								133,
@@ -1478,34 +1226,231 @@
 								3,
 								46
 							],
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 198.0,
+						"translation.y": 1019.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 0,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
-					"buffer": 13,
-					"file": "sample/Sample_SubstrokesNum.py",
+					"buffer": 8,
+					"file": "Generative model/Generate_Token.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 715,
+						"buffer_size": 2824,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								305,
-								305
+								2372,
+								2444
 							]
 						],
 						"settings":
 						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								10,
+								22,
+								19,
+								46,
+								53,
+								12,
+								156,
+								10,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1971.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Generative model/Generate_Stroke.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2161,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1436,
+								1448
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								10,
+								22,
+								19,
+								25,
+								54,
+								8,
+								44,
+								74,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 21.0,
+						"translation.y": 1514.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "sample/Sample_Relationid.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								826,
+								826
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
 							"c_time":
 							[
 								128,
@@ -1539,10 +1484,192 @@
 								1,
 								10,
 								44,
+								32,
+								8,
+								206,
+								224,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 784.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 11,
+					"file": "Generative model/Generate_binaryimages_img.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 709,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								586,
+								586
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								18,
+								59,
+								2,
+								93,
+								112,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 465.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Generative model/Generate_Trajectory.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 941,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								493,
+								456
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								10,
+								53,
+								38,
 								14,
-								14,
-								142,
-								139,
+								232,
+								109,
 								113,
 								1,
 								133,
@@ -1554,11 +1681,399 @@
 								46
 							],
 							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 670.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "sample/Sample_Transformationnumber.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 894,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								485,
+								295
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								17,
+								39,
+								0,
+								207,
+								21,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 558.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "sample/Sample_Gaufliter.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 611,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								298,
+								298
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								17,
+								58,
+								5,
+								81,
+								228,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 558.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "sample/Sample_Radomflips.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 621,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								411,
+								411
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								18,
+								25,
+								10,
+								222,
+								99,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 558.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "sample/addvar_controlpoint.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 873,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								476,
+								287
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								25,
+								38,
+								6,
+								73,
+								18,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 558.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "sample/addvar_scale.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 844,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								816,
+								816
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								225,
+								12,
+								15,
+								15,
+								25,
+								52,
+								8,
+								141,
+								31,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 744.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 12,
@@ -1569,7 +2084,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 41.0
 	},
 	"input":
 	{
@@ -1590,24 +2105,37 @@
 				0,
 				2,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.600122850123,
+			0.278497795096,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
+			0.533615546744,
 			1.0
 		]
 	},
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 182.0
+		"height": 467.0
 	},
 	"output.find_results":
 	{
@@ -1621,7 +2149,7 @@
 	"project": "HLCL.sublime-project",
 	"replace":
 	{
-		"height": 59.0
+		"height": 77.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1651,7 +2179,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
@@ -1659,7 +2187,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 292.0,
+	"side_bar_width": 424.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

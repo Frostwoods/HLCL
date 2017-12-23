@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-19 21:06:51
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-11-19 22:07:56
+# @Last Modified time: 2017-12-15 13:26:12
 """
 Descripition:
 
@@ -17,12 +17,13 @@ Change Activity:
 
 """
 Typelevel
-charactertype_dict={'storekesnum':None,'relations':None,'strokes':None}
+Type_phi
+charactertype_dict={'storekesnum':Int,'relations':relations_list,'strokes':strokes_list}
 
 relations_list=[relation_dict,…，] 
 relation_dict={'relationid'：None，'relationpara':None}
 
-strokes_list=[]
+strokes_list=[stroke_dict_1，……，stroke_dict_k]
 stroke_dict={'substorekesnum_int':,'sbustrokes_list':}
 substrokes_dict={'substrokesid_int': SubstrokesID,'control_x_array':substrokes_control_x,'scale_y':substrokes_Scale_y,}            
        # return Storke_Integrate()

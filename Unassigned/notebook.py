@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-27 10:43:35
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-11-14 19:00:04
+# @Last Modified time: 2017-12-15 13:26:13
 """
 Descripition:
 
@@ -87,3 +87,14 @@ Nov.7.2017
 	HighDim prom    维度是参数 从低纬度开始 2,3，……
 	阶段性的结果检验 由简入繁	
 	算法层面的稳定性
+
+Dec.8
+	回避if?
+
+	zip的用法
+
+	(-1)逆序的活用
+
+	
+
+
