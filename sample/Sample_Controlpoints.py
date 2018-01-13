@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-02 10:27:15
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 01:59:24
+# @Last Modified time: 2018-01-06 22:10:27
 """
 Descripition:
 
@@ -19,22 +19,14 @@ load_fun unfinished
 
 
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-sys.path.append('F:\Code\Matlab\HLCL\distribution')
-import scipy.io as sio 
-from Gaussian.sample_multigaussian import sample_multigaussian
 
 class Sample_Controlpoints():
-	def __init__(self,samplemode=sample_multigaussian):
+	def __init__(self,samplepara,samplemode):
 		self.sample=samplemode()
-		self.matfn = '/home/wei'
-		self.mean_list,sefl.cov_list=self.load_fun()
+		self.mean_list=samplepara['mean']
+		sefl.cov_list=samplepara['cov']
 		 
 	def __call__(self,SubstrokesID):
 
 		return self.sample(self.mean_list[SubstrokesID],self.cov_list[SubstrokesID])
 
-	def load_fun(self,)
-
-		return sio.loadmat(self.matfn) 

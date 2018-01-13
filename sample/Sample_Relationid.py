@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-01 10:44:32
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 01:45:04
+# @Last Modified time: 2018-01-07 21:44:19
 """
 Descripition:
 	Sample Strokes Relations id 
@@ -26,21 +26,16 @@ Change Activity:
 
 
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-sys.path.append('F:\Code\Matlab\HLCL\distribution')
-import scipy.io as sio 
-from Multinomial.Sample_Multinomial import Sample_Multinomial
 
 class Sample_Relationid(object):
     """docstring for sampel_"""
 
-    def __init__(self, SampleMode=Sample_Multinomial):
-    	self.NUM=4       
-        self.Sample = SampleMode()
-		self.matfn = 'path'
-        self.P = sio.loadmat(matfn)
-    def __call__(self):
+    def __init__(self, SampleMode):
+    	self.num=4       
+        self.Sample = SampleMode
 
-        return self.Sample(self.NUM,self.P)+1
+        
+    def __call__(self,i):
+
+        return randint.rvs(0, self.num)
 

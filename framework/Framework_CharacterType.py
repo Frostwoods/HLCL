@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-24 09:09:28
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 00:02:52
+# @Last Modified time: 2018-01-06 21:09:08
 """
 Descripition:
 		φ = {κ, S, R}
@@ -25,6 +25,7 @@ relation_dict={'relationid'：None，'relationpara':None}
 
 strokes_list=[stroke_dict,1]
 stroke_dict={'substorekesnum_int':,'sbustrokes_list':}
+
 substrokes_dict={'substrokesid_int': SubstrokesID,'control_x_array':substrokes_control_x,'scale_y':substrokes_Scale_y,}            
        # return Storke_Integrate()
 		

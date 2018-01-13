@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 15:25:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 02:32:58
+# @Last Modified time: 2018-01-11 22:01:34
 """
 Descripition:
 
@@ -16,26 +16,16 @@ Change Activity:
 
 
 """
-import scipy.io as sio
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-sys.path.append('F:\Code\Matlab\HLCL\distribution')
-from Gaussian.sample_gaussian import sample_gaussian
 
 class addvar_relation(object):
 	"""docstring for addvar_controlpoint"""
-	def __init__(self, nosiemodle=sample_gaussian):
+	def __init__(self, nosiepara,nosiemodle):
 
 
-		self.sample=samplemode()
-		self.matfn = '/home/weiliu/workspace/python/matlab/mat4py.mat' 
+		self.sample=nosiemodle()
+		self.para = nosiepara
 		
-		#self.cov =[]
-		
-		self.cov=self.load(self.matfn)
+
 	def __call__(self,tao):
-		return self.sample(tao,self.cov)
+		return self.sample(tao,self.para)
 
-
-	def load(self,matfn):
-		return sio.loadmat(self.matfn)

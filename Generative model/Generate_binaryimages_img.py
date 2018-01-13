@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 15:18:59
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 07:14:04
+# @Last Modified time: 2017-12-24 21:50:49
 """
 Descripition:
 
@@ -21,11 +21,17 @@ class  Generate_binaryimages_img(object):
  	def __init__(self, arg):
  		self.filter=[]
  		self.imgsize=[105,105]
- 	def __call__(self,Trajectory,A,Eposilon,Sigma):
+ 	def __call__(self,Trajectory):
+ 		
+ 		A=Sample_Transformationnumber()
+		Eposilon=Sample_Gaufliter()
+		Sigma=Sample_Radomflips()
+
  		global_rescaling(Trajectory,A)	
  		global_translation(Trajectory,A)
  		img=ink_model(Trajectory)
 
+		
 
  		convolving_img_twice(img,self.filter)
  		Gaussian_filter(img,Eposilon)

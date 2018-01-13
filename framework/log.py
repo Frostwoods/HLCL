@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-21 18:48:20
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 07:14:02
+# @Last Modified time: 2017-12-24 21:28:20
 """
 Descripition:
 
@@ -22,6 +22,8 @@ Change Activity:
 	#Token frame :done
 	img drawer :undone	
 
+
+
 	Generate_Relation.py 
 		序号问题 强行加1 0:3->1:4
 		Gen_Indepentrelation 需要重写
@@ -32,6 +34,7 @@ Change Activity:
 		relaiton_along undone
 	
 	Generate_Trajectory.py
-		B-spline see matlab edition 
+		B-spline see matlab edition  $$finished thx to stackflow
 
-	
+	Generate_Stroke.py
+		Generate_Substrokes_ID

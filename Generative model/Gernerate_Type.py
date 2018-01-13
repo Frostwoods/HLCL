@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 14:35:37
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 10:34:35
+# @Last Modified time: 2018-01-07 22:46:42
 """
 Descripition:
 	part of Generative model for character
@@ -47,46 +47,35 @@ for x in xrange(1,k):
 
 return φ
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-from Generative model.Generate_Stroke import *
-from Generative model.Generate_Relation import *
-from sample.Sample_kappa import *
-from sample.Sample_SubstrokesNum import *
-from sample.Sample_Relationid import *
+
 
 class Generate_Type(object):
 	"""docstring for Generate_Type"""
-	def __init__(self,typepara_dict):
-		typepara_dict['']
+	def __init__(self,sap_kappa,gen_subnum,gen_stroke,sap_rlid,gen_rl):		
+		self.sample_kappa=sap_kappa
 
-		self.Generate_Stroke=Generate_Stroke()
-		self.Generate_Relation=Generate_Relation()
-		self.Sample_kappa=Sample_kappa()
-		self.Sample_SubstrokesNum=Sample_SubstrokesNum()
-		self.Sample_Relationid=Sample_Relationid()
-		pass
+		self.sample_substrokesNum=gen_subnum
+		self.generate_stroke=gen_stroke
+
+		self.sample_Relationid=sap_rlid
+		self.generate_Relation=gen_rl
+
 				
-	def __call__(self,Kappa):
-		if Kappa is None	
-			Kappa = self.Sample_kappa()
-			
-		n=[]
-		Storke =[] 
-		Xi = []
-		RelationSet=[]
+	def __call__(self,kappa=None):
+		if kappa is None:	
+			kappa = self.sap_kappa()
 
-		for i in range(Kappa):
-			#lst con查看是否分离 查一下Reduce
-			n.append(self.Sample_SubstorkesNum(self.Kappa))
+		n= [self.sample_substorkesNum(kappa) for i in  range(kappa)]
+		storke= (self.generate_stroke(ni) for ni in n)
+		#
 
-			Storke.append([self.Generate_Stroke(i,self.n[i])])
+		relaitonid=[self.sample_Relationid(i) for i in range(kappa)]
+		relationset=[[self.generate_Relation(relaitonid[i],storke,i)] for i in range(kappa)]
 
-			Xi.append(self.Sample_Relationid())
+		relationset=[[self.generate_Relation(item,storke,i)] for (i,item) in enumerate(relaitonid)]
 
-			RelationSet.append( [self.Generate_Relation(Xi[i],Storke,i)])
-		
-		return {'storekesnum'=Kappa,'relations'=RelationSet,'strokes'=Storke}
+		type_dict={'storekesnum':kappa,'relations':relationset,'strokes':storke}
+		return type_dict
 
 '''
 	def Generate_wrap(self,Kappa):

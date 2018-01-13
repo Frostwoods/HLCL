@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 10:53:38
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 09:54:39
+# @Last Modified time: 2018-01-11 22:01:34
 """
 Descripition:
 	Input :a starting location L,token-level control points x,token-level scale y
@@ -25,7 +25,7 @@ from scipy.interpolate import BSpline
 class Generate_Trajectory(object):
 	"""docstring for Gen"""
 	#see matlab edtion
-	def __init__(self, sval):
+	def __init__(self, sval,):
 		super(Gen, self).__init__()
 		self.sval = sval
 		self.twodim_bspline=twodim_bspline()
@@ -39,6 +39,6 @@ class Generate_Trajectory(object):
 
 	def bspline_eval(self,var_control_x_array,var_scale_y)
 		#uniform cubic b-spline
-		BSpline
-		BSpline(var_control_x_array,[1],3)
+		
+		return BSpline(var_control_x_array,[1],3)
 		

@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 13:04:22
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 02:12:37
+# @Last Modified time: 2018-01-07 22:11:19
 """
 Descripition:
 	Inuput Relation ,Trajectory 
@@ -20,31 +20,26 @@ Change Activity:
 
 
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-sys.path.append('F:\Code\Matlab\HLCL\distribution')
-import scipy.io as sio 
-from Gaussian.sample_multigaussian import sample_multigaussian
 
 class Generate_Startlocation(object):
 	"""docstring for Generate_Startlocation"""
-	def __init__(self, samplemode=sample_multigaussian):
+	def __init__(self,sapara, samplemode):
 		#super(Generate_Startlocation, self).__init__()
 		self.sample = samplemode()
-		sel.cov=[[10,0],[0,10]]
+		sel.cov=sapara
 	def __call__(self,Relation,Trajectory):
 
 		return sample(cal_meanlocation(Relation,Trajectory),self.cov)
 
 	def cal_meanlocation(self,Relation,Trajectory):
 		#1:Indenpent 2:Start 3:End 4 :along
-		if Relation['relationid']==1:
+		if Relation['relationid']==0:
 			mean=Relation['para']
-		elif Relation['relationid']==2:
+		elif Relation['relationid']==1:
 			mean=Trajectory[Relation['para']][0]
-		elif Relation['relationid']==3:	
+		elif Relation['relationid']==2:	
 			mean=Trajectory[Relation['para']][-1]
-		elif Relation['relationid']==4:
+		elif Relation['relationid']==3:
 			#'spline-eval' undone
 			mean=[0,0]
 		return mean

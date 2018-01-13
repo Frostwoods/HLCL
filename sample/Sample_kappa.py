@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-01 10:42:41
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-21 23:54:47
+# @Last Modified time: 2018-01-11 22:01:34
 """
 Descripition:
 	
@@ -16,25 +16,18 @@ Change Activity:
 Undone pararead
 
 
+io as sio 
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-sys.path.append('F:\Code\Matlab\HLCL\distribution')
-import scipy.io as sio 
-from Multinomial.Sample_Multinomial import Sample_Multinomial
-class Sample_kappa(object):
+
+class Sample_Kappa(object):
     """docstring for sampel_"""
 
-    def __init__(self, SampleMode = Sample_Multinomial):
+    def __init__(self,samplepara, samplemode ):
 
       
-        self.Sample = SampleMode()
-        self.matfn = '/home/weiliu/workspace/python/matlab/mat4py.mat' 
-        self.NUM, self.P = self.read_parameter()
+        self.sample = samplemode()
+        self.NUM= samplepara['num']
+        self.P =samplepara['p']
     def __call__(self):
 
-        return self.Sample(self.NUM, self.P)
-
-    def read_parameter(self):
-        #someloadingfunciton()
-         return sio.loadmat(self.matfn) 
+        return self.sample(self.NUM, self.P)

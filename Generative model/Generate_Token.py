@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 19:46:53
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 07:14:03
+# @Last Modified time: 2017-12-25 10:05:12
 """
 Descripition:
 	 Draw Characher Image Given a character type φ
@@ -37,40 +37,39 @@ from sample.Sample_Radomflips import *
 
 class Generate_Token(object):
 	"""docstring for Gen"""
-	def __init__(self, arg):
-		self.Generate_Startlocation=Generate_Startlocation()		
-		self.addvar_relation=addvar_relation()
-		self.addvar_controlpoint=addvar_controlpoint()
-		self.addvar_scale=addvar_scale()
-		self.Generate_Trajectory=Generate_Trajectory()
-		self.Sample_Transformationnumber=Sample_Transformationnumber()		
-	
-	def __call__(self,Type_phi):
-		self.Kappa_int=Type_phi['storekesnum']
-		self.m_relationset_list=Type_phi['relations']
-		self.trajectory_list=[]
-		self.start_location=[]
+	def __init__(self, gen_startloc,adv_rl,adv_ctp,adv_scl,gen_trj,noi_img):
+		self.Generate_Startlocation=gen_startloc		
+		self.addvar_relation=addvar_relation
+		self.addvar_controlpoint=addvar_controlpoint
+		self.addvar_scale=addvar_scale
+		self.Generate_Trajectory=Generate_Trajectory
+		slef.Generate_binaryimages_img=noi_img
 
-		for i in xrange(self.Kappa):
+	def __call__(self,Type_phi):
+		kappa=Type_phi['storekesnum']
+		m_relationset_list=Type_phi['relations']
+		trajectory_list=[]
+		start_loc=[]
+
+
+
+		for i in xrange(kappa):
 			#1:Indenpent 2:Start 3:End 4 :along
-			if self.m_relationset_list[i]['relationid']==4:
-				self.m_relationset_list[i]['relationpar']=addvar_relation(self.m_relationset_list[i]['relationpar'][2],std)
+			if m_relationset_list[i]['relationid']==4:
+				m_relationset_list[i]['relationpar']=addvar_relation(m_relationset_list[i]['relationpar'][2],std)
+			sub_num=Type_phi['strokes'][i]['substorekesnum_int']
+			start_loc.append=[Generate_Startlocation(self.m_relationset_list[i],self.trajectory_list)]
 			
-			self.start_location+=[Generate_Startlocation(self.m_relationset_list[i],self.trajectory_list)]
+			var_control_x_array=[addvar_controlpoint(Type_phi['strokes'][i]['substrokes_control_x']) for j in range(sub_num)]
+			var_scale_y=[addvar_scale(Type_phi['strokes'][i]['scale_y']) for j in range(sub_num)]
 			
-			var_control_x_array=[addvar_controlpoint(Type_phi['strokes'][i]['substrokes_control_x']) for j in range(Type_phi['strokes'][i]['substorekesnum_int'])]
-			var_scale_y=[addvar_scale(Type_phi['strokes'][i]['scale_y']) for j in range(Type_phi['strokes'][i]['substorekesnum_int'])]
-			
-			self.Trajectory[i]=Generate_Trajectory(self.start_location,self.var_control_x_array,self.var_scale_y)
+			trajectory_list.append=Generate_Trajectory(self.start_location,self.var_control_x_array,self.var_scale_y)
 
 			#for  j in xrange(Type_phi['strokes'][i]['substorekesnum_int']):
 			#	var_control_x_array[j]=addvar_controlpoint(Type_phi['strokes'][i]['substrokes_control_x'])
 			#	var_scale_y[j]=addvar_scale(Type_phi['strokes'][i]['scale_y'])			
-		A=Sample_Transformationnumber()
-		Eposilon=Sample_Gaufliter()
-		Sigma=Sample_Radomflips()
-		
-		I=Generate_binaryimages_img(self.Trajectory,A,Eposilon,Sigma)
+
+		I=self.Generate_binaryimages_img(Trajectory)
 
 		return I
 

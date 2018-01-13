@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-11-01 10:44:14
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 01:05:24
+# @Last Modified time: 2018-01-06 21:09:03
 """
 Descripition:
 	Input kappa: [int]
@@ -20,6 +20,7 @@ Undone para read
 import sys
 sys.path.append('F:\Code\Matlab\HLCL')
 sys.path.append('F:\Code\Matlab\HLCL\distribution')
+
 import scipy.io as sio 
 from Multinomial.Sample_Multinomial import Sample_Multinomial
 
@@ -28,8 +29,10 @@ class Sample_SubstrokesNum(object):
 
     def __init__(self, SampleMode = Sample_Multinomial):           
         self.Sample = SampleMode()
-        self.matfn = '/home/weiliu/workspace/python/matlab/mat4py.mat' 
-    def __call__(self,Stroke_order):
+        
+        #self.matfn = '/home/weiliu/workspace/python/matlab/mat4py.mat' 
+
+    def __call__(self,Stroke_order,PM):
     	self.read_parameter(Stroke_order)  
         return self.Sample(self.NUM, self.P)
 
