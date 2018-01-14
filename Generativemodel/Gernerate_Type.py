@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 14:35:37
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-07 22:46:42
+# @Last Modified time: 2018-01-14 23:23:18
 """
 Descripition:
 	part of Generative model for character
@@ -63,10 +63,11 @@ class Generate_Type(object):
 				
 	def __call__(self,kappa=None):
 		if kappa is None:	
-			kappa = self.sap_kappa()
+			kappa = self.sample_kappa()
 
-		n= [self.sample_substorkesNum(kappa) for i in  range(kappa)]
-		storke= (self.generate_stroke(ni) for ni in n)
+		n= [self.sample_substrokesNum(i) for i in  range(kappa)]
+		
+		storke= [self.generate_stroke(ni) for ni in n]
 		#
 
 		relaitonid=[self.sample_Relationid(i) for i in range(kappa)]

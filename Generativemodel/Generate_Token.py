@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 19:46:53
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-25 10:05:12
+# @Last Modified time: 2018-01-14 21:22:49
 """
 Descripition:
 	 Draw Characher Image Given a character type φ
@@ -22,18 +22,6 @@ Change Activity:
 
 
 """
-import sys
-sys.path.append('F:\Code\Matlab\HLCL')
-from Generative model.Generate_Startlocation import *
-from Generative model.Generate_Trajectory import *
-from Generative model.Generate_binaryimages_img import *
-
-from sample.addvar_relation import *
-from sample.addvar_controlpoint import *
-from sample.addvar_scale import *
-from sample.Sample_Transformationnumber import *
-from sample.Sample_Gaufliter import *
-from sample.Sample_Radomflips import *
 
 class Generate_Token(object):
 	"""docstring for Gen"""

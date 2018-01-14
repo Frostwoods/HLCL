@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-01-06 21:19:50
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-11 22:01:32
+# @Last Modified time: 2018-01-14 22:54:04
 """
 Descripition:
 
@@ -18,6 +18,7 @@ Change Activity:
 
 """
 import pickle
+import numpy as np
 def save_obj(obj, name ,path):
     with open(path+ name + '.pkl', 'wb') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)        
@@ -28,15 +29,27 @@ def main():
 	fakepara_t['kappa']={'num':3,'p':kappara_p}
 
 
+	subnum1={'num':3,'p':kappara_p}
+	subnum2={'num':3,'p':kappara_p}
+	subnum3={'num':3,'p':kappara_p}
+	fakepara_t['subnum']=[subnum1,subnum2,subnum3]
+
 	pri_num=3
-	m_p=[0.3,0.3,0.4]
+	m_p=[0.3,0.4,0.3]
 	markovmat={0:m_p,1:m_p,2:m_p}
 	fakepara_t['fst_id']={'num':3,'p':m_p}
 	fakepara_t['subid']={'markovmat':markovmat,'num':3}
 
 	fakepara_t['ctlp']={}
-	mean=[[23,12,15,12,12,15,15,12,12,12] for i in range(pri_num)]
-	fakepara_t['ctlp']['mean']=mean
+
+	substrokesctplist=[]
+	substrokesctplist.append(np.array([[0, 0], [4, -2], [2, -5], [0, -8], [4, -9]]))
+	substrokesctplist.append(np.array([[0, 0], [1, 2], [3, 0], [2, -3], [0, -5]]))
+	substrokesctplist.append(np.array([[0, 0], [0, -1], [0, -2], [0, -3], [0, -4]]))
+	substrokesctplist.append(np.array([[0, 0], [1, 2], [2, 0], [3, -2], [4, 0]]))
+	
+	fakepara_t['ctlp']['mean']=substrokesctplist
+	fakepara_t['ctlp']['cov']=[np.eye(10) for i in range(4)]
 
 	fakepara_t['scl']={}
 	fakepara_t['scl']['alpha']=[1,2,3]
@@ -44,7 +57,7 @@ def main():
 
 	fakepara_t['rlt']={}
 	fakepara_t['rlt']['ind']={}
-	['ind']['mat']=[[0.1,0.2],[0.4,0.3]]
+	fakepara_t['rlt']['ind']['mat']=[[0.1,0.2],[0.4,0.3]]
 
 
 	save_obj(fakepara_t,'faketypepara',path)

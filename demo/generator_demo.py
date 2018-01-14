@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-21 21:32:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-11 22:01:31
+# @Last Modified time: 2018-01-14 20:03:23
 """
 Descripition:
 
@@ -55,7 +55,6 @@ def main():
 	f.close()
 	f2.close()
 	'''
-
 	typepara_dict=load_obj('typeparafn')
 	tokenpara_dict=load_obj('tokenparafn')
 
@@ -80,8 +79,6 @@ def main():
 								gen_stroke,sap_relationid,gen_relation)	
 	#tokenlevel
 
-
-
 	gen_startloc=Generate_Startlocation(tokenpara_dict['strloc'],sample_multigaussian)
 	
 	adv_rl=addvar_relation(tokenpara_dict['nspara']['rlt'],sample_gaussian)
@@ -98,7 +95,7 @@ def main():
 	#creat picture
 	type_list=[gen_typechar() for i in range[sampletime]]
 
-	img_list=[renderimg(t) for t in type_list]
+	img_list=[gen_img(t) for t in type_list]
 	
 	[img_save(img_list[i],i) for i in range(sampletime)]
 
