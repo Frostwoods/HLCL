@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-01-11 22:23:19
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 20:12:42
+# @Last Modified time: 2018-01-15 10:33:21
 """
 Descripition:
 
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     substrokesctplist = [ctp1, ctp2, ctp3, ctp4]
 
     charsubnumlist=[2,3,4]
-    charidlist=[[1,0],[0, 3, 1],[3,0,1,0]]
+    charidlist=[[1,0],[0,3,1],[3,0,1,0]]
     charsclist=[[2,2],[5,5,5],[3,4,2,5]]
     charstartlocationlist=[np.array([20, 60]),np.array([30, 80]),np.array([50, 80])]
     
@@ -102,7 +102,8 @@ if __name__ == '__main__':
     img_length = 105
     r_img = np.ones((img_width, img_length, 3), np.uint8) * 255
 
-    strokesctplist=[calculateAstroketrajectory(para[0],para[1],para[2]) for para in zip(charctplist,charsclist,charstartlocationlist)]
+    strokesctplist=[calculateAstroketrajectory(para[0],para[1],para[2]) 
+        for para in zip(charctplist,charsclist,charstartlocationlist)]
     r_img=reduce(darwastroke,strokesctplist,r_img)
 
     cv2.imshow("Art", r_img)
