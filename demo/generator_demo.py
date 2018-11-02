@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
+0# -*- coding: utf-8 -*-
 # @Poroject Name: .
 # @File Name: generator_demo.py
 # @Author: Yang Zhao
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-21 21:32:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 20:03:23
+# @Last Modified time: 2018-03-11 17:56:16
 """
 Descripition:
 
@@ -78,24 +78,24 @@ def main():
 	gen_typechar=Generate_Type(sap_strokesnum,sap_substrokenum,
 								gen_stroke,sap_relationid,gen_relation)	
 	#tokenlevel
-
 	gen_startloc=Generate_Startlocation(tokenpara_dict['strloc'],sample_multigaussian)
+
 	
 	adv_rl=addvar_relation(tokenpara_dict['nspara']['rlt'],sample_gaussian)
 	adv_ctp=addvar_controlpoint(tokenpara_dict['nspara']['ctp'],sample_multigaussian)
 	adv_scl=addvar_scale(tokenpara_dict['nspara']['scl'],sample_gaussian)
 
-	gen_trj=Generate_Trajectory()
+	gen_trj=calculateAstroketrajectory
 
 	noi_img=Generate_binaryimages_img(sap_tsf,sampguas,??)
 
-	gen_img=Generate_Token(gen_startloc,adv_rl,adv_ctp,
+	gen_token=Generate_Token(gen_startloc,adv_rl,adv_ctp,
 				adv_scl,gen_trj,noi_img)
 
 	#creat picture
 	type_list=[gen_typechar() for i in range[sampletime]]
 
-	img_list=[gen_img(t) for t in type_list]
+	img_list=[gen_tokne(t) for t in type_list]
 	
 	[img_save(img_list[i],i) for i in range(sampletime)]
 

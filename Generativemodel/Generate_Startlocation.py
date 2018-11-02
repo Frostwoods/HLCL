@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 13:04:22
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-07 22:11:19
+# @Last Modified time: 2018-03-11 18:36:26
 """
 Descripition:
 	Inuput Relation ,Trajectory 
@@ -26,20 +26,23 @@ class Generate_Startlocation(object):
 	def __init__(self,sapara, samplemode):
 		#super(Generate_Startlocation, self).__init__()
 		self.sample = samplemode()
-		sel.cov=sapara
+		self.cov=sapara
+		print 'cov',self.cov[0],'done'
 	def __call__(self,Relation,Trajectory):
 
-		return sample(cal_meanlocation(Relation,Trajectory),self.cov)
+		return self.sample(self.cal_meanlocation(Relation,Trajectory),self.cov[0])
 
 	def cal_meanlocation(self,Relation,Trajectory):
 		#1:Indenpent 2:Start 3:End 4 :along
+		print Relation
 		if Relation['relationid']==0:
-			mean=Relation['para']
+			mean=Relation['relationpara']
 		elif Relation['relationid']==1:
-			mean=Trajectory[Relation['para']][0]
+			mean=Trajectory[Relation['relationpara'][0]][0]
 		elif Relation['relationid']==2:	
-			mean=Trajectory[Relation['para']][-1]
+			mean=Trajectory[Relation['relationpara'][0]][-1]
 		elif Relation['relationid']==3:
 			#'spline-eval' undone
 			mean=[0,0]
+		print 'mean',mean
 		return mean

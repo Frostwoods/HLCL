@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 19:25:54
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 23:31:43
+# @Last Modified time: 2018-03-08 11:16:09
 """
 Descripition:
 	Sample stroke
@@ -45,9 +45,9 @@ class Generate_Stroke(object):
         
         substrokesid=[]
         substrokesid.append(self.Generate_Substrokes_ID(None))
-        print substrokesid,'subfirstid',substrokes_num
+        
         for i in range(substrokes_num-1):
-            print 'id',i
+           
             substrokesid.append(self.Generate_Substrokes_ID(substrokesid[i]))
 
         substrokes_ctlp=[self.Sample_Controlpoints(substrokesid[i]) for i in range(substrokes_num)]
@@ -63,7 +63,7 @@ class Generate_Stroke(object):
             substrokes_dictlist.append([{'substrokesid_int': SubstrokesID(i),
                 'control_x_array':substrokes_control_x(i),'scale_y':substrokes_Scale_y(i)}])
           '''      
-        stroke_dict={'substorekesnum_int':substrokes_num,'sbustrokes_list':substrokes_dictlist} 
+        stroke_dict={'substorekesnum_int':substrokes_num,'substrokes_list':substrokes_dictlist} 
 
         return stroke_dict
 

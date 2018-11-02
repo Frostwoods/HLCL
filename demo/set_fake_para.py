@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-01-06 21:19:50
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 22:54:04
+# @Last Modified time: 2018-03-11 18:15:48
 """
 Descripition:
 
@@ -43,10 +43,10 @@ def main():
 	fakepara_t['ctlp']={}
 
 	substrokesctplist=[]
-	substrokesctplist.append(np.array([[0, 0], [4, -2], [2, -5], [0, -8], [4, -9]]))
-	substrokesctplist.append(np.array([[0, 0], [1, 2], [3, 0], [2, -3], [0, -5]]))
-	substrokesctplist.append(np.array([[0, 0], [0, -1], [0, -2], [0, -3], [0, -4]]))
-	substrokesctplist.append(np.array([[0, 0], [1, 2], [2, 0], [3, -2], [4, 0]]))
+	substrokesctplist.append(np.array([0, 0,4, -2,2, -5,0, -8,4, -9]))
+	substrokesctplist.append(np.array([0, 0, 1, 2, 3, 0, 2, -3, 0, -5]))
+	substrokesctplist.append(np.array([0, 0, 0, -1, 0, -2, 0, -3, 0, -4]))
+	substrokesctplist.append(np.array([0, 0, 1, 2, 2, 0, 3, -2, 4, 0]))
 	
 	fakepara_t['ctlp']['mean']=substrokesctplist
 	fakepara_t['ctlp']['cov']=[np.eye(10) for i in range(4)]
@@ -64,10 +64,12 @@ def main():
 
 	faketoken_t={}
 
-	faketoken_t['strloc_cov']=[[12,0],[0,12]] #cov_mat
+	faketoken_t['strloc']=[np.eye(2)] #cov_mat
 	faketoken_t['nspara']={}
-	tokenpara_dict['nspara']['rlt']=[[1,0],[0,1]]
-
+	faketoken_t['nspara']['rlt']=[[1,0],[0,1]]
+	faketoken_t['nspara']['ctp']=[np.eye(10)]
+	faketoken_t['nspara']['scl']=[1]
+	save_obj(faketoken_t,'faketokenpara',path)
 
 
 

@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-22 14:35:37
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 23:23:18
+# @Last Modified time: 2018-03-08 10:57:19
 """
 Descripition:
 	part of Generative model for character
@@ -73,7 +73,7 @@ class Generate_Type(object):
 		relaitonid=[self.sample_Relationid(i) for i in range(kappa)]
 		relationset=[[self.generate_Relation(relaitonid[i],storke,i)] for i in range(kappa)]
 
-		relationset=[[self.generate_Relation(item,storke,i)] for (i,item) in enumerate(relaitonid)]
+		relationset=[self.generate_Relation(item,storke,i) for (i,item) in enumerate(relaitonid)]
 
 		type_dict={'storekesnum':kappa,'relations':relationset,'strokes':storke}
 		return type_dict

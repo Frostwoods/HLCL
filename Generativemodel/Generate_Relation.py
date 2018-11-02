@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-10-27 00:11:48
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 22:51:33
+# @Last Modified time: 2018-03-08 11:08:45
 """
 Descripition:
 
@@ -71,9 +71,10 @@ class Generate_Relation():
         return Relation_Dict
     def Gen_Indepentrelation(self,num):
         #需要重写
-        print self.independentmat_p_mat
-        sample=self.sample_indepent(len(self.independentmat_p_mat),self.independentmat_p_mat.flatten())
-        r=self.independentmat_p_mat.shape[0]
+        
+        sample=self.sample_indepent(len(self.independentmat_p_mat)^2,reduce(lambda x,y:x+y,self.independentmat_p_mat))
+        r=len(self.independentmat_p_mat)
+        print [sample[0]//r,sample[0]%r]
         return [sample[0]//r,sample[0]%r]
 
     def Gen_Startrelation(self,num):

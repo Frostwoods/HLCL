@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-23 10:59:24
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 22:47:38
+# @Last Modified time: 2018-03-08 10:49:24
 """
 Descripition:
 
@@ -28,4 +28,4 @@ class Generate_Substrokes_ID(object):
             current_id = self.Sample_FirstSubstrokesid()
         else:
             current_id = self.Sample_Substrokesid(formerid)
-        return current_id
+        return int(current_id[0])

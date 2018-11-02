@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-21 21:32:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 23:29:54
+# @Last Modified time: 2018-03-11 18:20:52
 """
 Descripition:
 
@@ -25,8 +25,12 @@ from Generativemodel.Generate_Substrokes_ID import *
 from Generativemodel.Generate_Stroke import *
 from Generativemodel.Generate_Relation import *
 from Generativemodel.Gernerate_Type import *
+from Generativemodel.Generate_Startlocation import *
+from Generativemodel.Generate_Trajectory import *
+from Generativemodel.Generate_Token import *
 #from Generativemodel import *
 from sample.typesample import *
+from sample.tokensample import *
 from distribution.distribution import *
 import pickle
 
@@ -42,11 +46,12 @@ def load_obj(path):
     with open(path, 'rb') as f:
         return pickle.load(f)     
 def main():
-	sampletime=100
+	sampletime=3
 
 	path='F:/Code/Matlab/HLCL/demo/faketypepara.pkl'
-
+	path2='F:/Code/Matlab/HLCL/demo/faketokenpara.pkl'
 	typepara_dict=load_obj(path)
+	tokenpara_dict=load_obj(path2)
 	#tokenpara_dict=load_obj('tokenparafn')
 	#print typepara_dict
 	sap_multinomial=Sample_Multinomial()
@@ -71,11 +76,25 @@ def main():
 								gen_stroke,sap_relationid,gen_relation)	
 	#tokenlevel
 
+	gen_startloc=Generate_Startlocation(tokenpara_dict['strloc'],sample_multigaussian)
+	
+	adv_rl=addvar_relation(tokenpara_dict['nspara']['rlt'],sample_gaussian)
+	adv_ctp=addvar_controlpoint(tokenpara_dict['nspara']['ctp'],sample_multigaussian)
+	adv_scl=addvar_scale(tokenpara_dict['nspara']['scl'],sample_gaussian)
 
-	print gen_typechar()
+	gen_trj=calculateAstroketrajectory
+
+	#noi_img=Generate_binaryimages_img(sap_tsf,sampguas,??)
+	noi_img=[]
+	gen_token=Generate_Token(gen_startloc,adv_rl,adv_ctp,
+				adv_scl,gen_trj,noi_img)
+
+
 	#creat picture
 	type_list=[gen_typechar() for i in range(sampletime)]
-	print type_list
+	print gen_typechar(),'1234'
+	print type_list[0],'-------',type_list[1]
+	print gen_token(type_list[0])
 	#visualazation
 	
 if __name__ =='__main__' :

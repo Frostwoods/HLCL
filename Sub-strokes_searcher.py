@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-# @Poroject Name: .
-# @File Name: Sample_FirstorderMarkovProcess.py
+# @Poroject Name: HLCL
+# @File Name: Sub-strokes_searcher.py
 # @Author: Yang Zhao
 # @Emial: frostwoods@foxmail.com
-# @Date:   2017-11-03 11:19:36
+# @Date:   2018-10-30 14:57:45
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-11-07 08:31:14
+# @Last Modified time: 2018-10-30 15:23:06
 """
 Descripition:
-
+	HLCL SM 3.4
 
 
 Change Activity:

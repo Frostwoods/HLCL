@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-15 15:17:39
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2017-12-22 02:39:48
+# @Last Modified time: 2018-03-11 15:31:31
 """
 Descripition:
 
@@ -24,7 +24,7 @@ from Gaussian.sample_multigaussian import sample_multigaussian
 
 
 class Sample_Transformationnumber(object):
-	"""docstring for Sampel"""
+	"""docstring for Sampel"""reconstr
 	def __init__(self, samplemode=sample_multigaussian):
 
 		self.sample=samplemode()

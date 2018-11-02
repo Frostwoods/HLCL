@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-01-14 21:41:19
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-01-14 21:43:32
+# @Last Modified time: 2018-03-11 18:18:25
 """
 Descripition:
 
@@ -32,7 +32,7 @@ class sample_multigaussian():
 
         return multivariate_normal.rvs(mean,cov,sampletimes)
 
-class sample_gausssian():
+class sample_gaussian():
 
     def __init__(self ):
  		pass
@@ -61,7 +61,7 @@ class Sample_Multinomial():
         sample = np.zeros(sampletimes)
         for x in xrange(0, sampletimes):
             One_sample = multinomial.rvs(1 , self.P)
-            sample[x] = np.where(One_sample == 1)[0]       
+            sample[x] = np.where(One_sample == 1)[0]   
         return sample
 
     def gen_NUM(self, maxnumber=10):
