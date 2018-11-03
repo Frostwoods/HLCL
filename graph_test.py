@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-01 13:51:24
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-01 21:22:28
+# @Last Modified time: 2018-11-03 14:30:45
 """
 Descripition:
 
@@ -44,6 +44,7 @@ def creat_toy_graph():
         ToyG.edges[x,y]['isused']=False
 
     print len(ToyG.edges),ToyG.edges[1,2],ToyG.edges[2,1]
+    print ToyG.nodelist
     test= [n for n in ToyG.neighbors(4)]
     vector=np.array(ToyG.nodes[2]['Location'])-np.array(ToyG.nodes[1]['Location'])
     print np.angle(complex(vector[0],vector[1]),deg=True)
