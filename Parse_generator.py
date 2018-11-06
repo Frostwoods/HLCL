@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-10-31 19:03:03
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-03 20:59:17
+# @Last Modified time: 2018-11-06 21:12:05
 """
 Descripition:
 	HLCL SM 3.3
@@ -20,12 +20,13 @@ Descripition:
 	there must be some funtion by which
 		stroke_c can be transformed to
 			 	trajectory_c [[xi,yi]]
+Env:
+    python 2.7 ,numpy,copy,networkx 2.2
 
 Unit test:
-	a toy graph  a list of dictionary node
+	a toy graph created by function creat_toy_graph
         
-        node {'id':i,'Location':[x,y],'edgelist':[id of other nodes],['']}
-    node['id']
+    just run this file
 
 Change Activity:
 
@@ -86,28 +87,30 @@ class Penwalker():
             self.last_node=None
             self.last_edgevector=None
 
-            self.graph=self.orginal_graph
 
             self.current_node=self.uniform_choice_node(list(self.graph.nodes))[0]
             self.current_stroke.append(self.current_node)
             step=1
-            if self.testmode:print 'STEP',step,'node',self.current_node
+            if self.testmode:print '[STEP]:',step,'current_node:',self.current_node
             while self.count_all_unused_edges():
                 #generate a parse
                 if self.last_node is not None:                    
                     #self.current_action_dict['retrace']=np.pi/2
                     self.current_action_dict['pickup']=np.pi/4
-
+                    if self.count_unused_edges(self.last_node)==0:
+                        self.current_action_dict['retrace']=np.pi/2
                 self.cost_calculate()
                 action=self.select_action_by_cost()
                 self.action_perform(action)
                 if self.testmode:print 'cur_stroke',self.current_stroke,'cur_parse',self.current_parse
                 step=step+1
-                if self.testmode:print 'STEP',step
+                if self.testmode:print '[STEP]:',step,'current_node:',self.current_node
                 self.current_action_dict={}
 
-            if self.testmode:print  'RESULT',self.current_parse
-            self.parses_set.add(tuple(self.current_parse))
+            if self.testmode:print  'RESULT-A-Parse:',self.current_parse
+            curpar=tuple(tuple(p) for p in self.current_parse)
+
+            self.parses_set.add(curpar)
             self.current_parse=[]
         return self.parses_set,self.strokes_set
 
@@ -127,7 +130,7 @@ class Penwalker():
                 #if self.testmode:print self.current_action_dict
 
     def select_action_by_cost(self):
-        if self.testmode:print self.current_action_dict
+        if self.testmode:print 'action_cost_list(angle):',self.current_action_dict
         actionlist,actioncost=zip(*self.current_action_dict.items())
         actionprob_unnorm=np.array([self.cost2prob(i) for i in actioncost])
         #if self.testmode:print actionlist,actionprob_unnorm.sum()
@@ -209,7 +212,7 @@ class Penwalker():
         return  unusded_edges_num
     def count_all_unused_edges(self):
         num=0
-        
+        if self.testmode:print 'curren_edges_state:'
         for (x,y) in list(self.graph.edges):
             if self.testmode:print x,y, self.graph.edges[x,y]['isunused']
             if self.graph.edges[x,y]['isunused']:    
@@ -230,4 +233,7 @@ if __name__ =='__main__' :
     #print Graph.nodes[1]['Location']
     penwalker=Penwalker(Graph)
     a,b=penwalker()
-    print a,b
+    print 'final result_Parseset:'
+    print a
+    print 'final result_Strokeset:'
+    print b
