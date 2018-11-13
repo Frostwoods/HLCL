@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-10-31 19:03:03
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-06 21:12:05
+# @Last Modified time: 2018-11-12 21:11:24
 """
 Descripition:
 	HLCL SM 3.3
@@ -180,55 +180,7 @@ class Penwalker():
             self.current_node=newnode
         self.current_action_dict={}
         
-
-
-    def pickup_new_node(self):
-        newnodelist=[]
-        for i in list(self.graph.nodes):
-            if i !=self.current_node:
-                newnodelist.append(i)
-
-        if self.testmode:print newnodelist
-        edgesnumlist=[self.count_unused_edges(i) for i in newnodelist]
-        for (i,n) in zip(newnodelist,edgesnumlist):
-            if n==0:
-                if self.testmode:print  i,n
-                newnodelist.remove(i)
-                edgesnumlist.remove(n)
-        pickprob_unnorm=np.array([self.pickup_prob(j) for j in  edgesnumlist])
-
-        pickupprob=pickprob_unnorm/pickprob_unnorm.sum()
-        return  np.random.choice(newnodelist,1,p=pickupprob)[0]
-
-    def pickup_prob(self,n):
-        return 1.0/(n**self.cost_pickup_constant)
-
-    def count_unused_edges(self,node):
-        unusded_edges_num=0
-        for i in self.graph.neighbors(node):
-            if self.graph.edges[i,node]['isunused']:
-                unusded_edges_num=unusded_edges_num+1
-
-        return  unusded_edges_num
-    def count_all_unused_edges(self):
-        num=0
-        if self.testmode:print 'curren_edges_state:'
-        for (x,y) in list(self.graph.edges):
-            if self.testmode:print x,y, self.graph.edges[x,y]['isunused']
-            if self.graph.edges[x,y]['isunused']:    
-                num=num+1
-        if num>0:
-            return True
-        else:
-            if len(self.current_stroke)>0:
-                self.strokes_set.add(tuple(self.current_stroke))
-                self.current_parse.append(self.current_stroke)
-            return False
-
-
-
-
-if __name__ =='__main__' :
+    if __name__ =='__main__' :
     Graph=creat_toy_graph()
     #print Graph.nodes[1]['Location']
     penwalker=Penwalker(Graph)
