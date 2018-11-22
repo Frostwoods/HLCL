@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-10-31 19:03:03
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-12 21:11:24
+# @Last Modified time: 2018-11-13 15:08:49
 """
 Descripition:
 	HLCL SM 3.3
@@ -179,8 +179,10 @@ class Penwalker():
             self.last_node=self.current_node
             self.current_node=newnode
         self.current_action_dict={}
-        
-    if __name__ =='__main__' :
+ 
+
+
+if __name__ =='__main__' :
     Graph=creat_toy_graph()
     #print Graph.nodes[1]['Location']
     penwalker=Penwalker(Graph)
