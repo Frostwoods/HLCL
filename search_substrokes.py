@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-22 15:36:53
+# @Last Modified time: 2018-11-23 13:27:53
 """
 Descripition:
 
@@ -17,13 +17,13 @@ Change Activity:
 
 """
 import numpy as np
-
+'''
 class toy_stroke():
     pass
 class toy_primatives():
     pass
-
-
+'''
+'''
 class search_substrokes():
 
 # input: a storke a list of node with edges trajector between them
@@ -34,10 +34,15 @@ class search_substrokes():
         pass
     def __call__(self):
         pass
-
-def sample_splits():
-    #input
-    pass
+'''
+def sampleSplits(p_array,limit=5):
+    subPropose=np.zeros(p_array.size)
+    newP=p_array
+    newP[:limit]=0
+    newP[-limit:]=0
+    split=np.random.choice(range(p_array.size),1,p=newP/newP.sum())[0]
+    subPropose[0],subPropose[-1],subPropose[split]=1,1,1
+    return subPropose==1
 
 def prob_node_byangle(anglearray,baseline=0.001):
 #1	input:  output
@@ -56,7 +61,7 @@ def cal_angles_two_vectors(v1,v2):
 #2   
     return abs(np.angle(complex(v1[0],v1[1])\
              /complex(v2[0],v2[1])))
-
+'''
 def propose_merges():
 
     pass
@@ -71,7 +76,7 @@ def fit_bspline(trajectory):
 
 def score_substroke_propose():
 	pass
-
+'''
 
 
 

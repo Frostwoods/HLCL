@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:19:17
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-22 16:25:45
+# @Last Modified time: 2018-11-23 13:42:10
 """
 Descripition:
 
@@ -43,14 +43,36 @@ class Mytest(unittest.TestCase):
     
         self.assertEquals(targetCode.cal_directionOfnodeInatrajectory(trajectory).tolist(), angle_list.tolist()) 		
     
-    @data ((np.array([np.pi*8/16,np.pi*6/16,0]),np.array([0.64,0.36,0])),\
+
+    @data ((np.array([np.pi*8/16,np.pi*6/16,0]),np.array([0.63766275,0.359796761,0.002540489])),\
         (np.array([0,0,0,0]),np.array([0.25,0.25,0.25,0.25])))
     @unpack
     def test_prob_node_byangle(self,anglearray,parray):
-        self.asserAlmostEqual(targetCode.prob_node_byangle(anglearray),parray,2)
+        print targetCode.prob_node_byangle(anglearray)
+        self.assertTrue(np.all(np.isclose(targetCode.prob_node_byangle(anglearray),parray)))
+    
+    @data ((4,1),(8,2),(12,3))
+    @unpack
+    def testSampleSplits(self,testlen,limit):
+        #3个断点1
+        #1之间大于5
+        #随机性检验  
+        unNormP=np.random.rand(testlen)
+        NormP=unNormP/unNormP.sum()
+        print NormP.sum()
+        #NormP=np.array([0.5,0.4,0.05,0.05])
+        SubProp=targetCode.sampleSplits(NormP,limit=limit)
+        print SubProp
+        splitIndex=np.where(SubProp)[0]
+        self.assertEqual(splitIndex.size,3)
+        dis=[splitIndex[i+1]-splitIndex[i] for i in range(2)]
+        print dis
+        self.assertTrue(np.all(dis>=limit))    
+
 
     def test_propose_splits(self):    
-        #alomost equal  去看高概率的是否多出现 
+        #alomost equal  去看高概率的是否多出现
+
         pass
 
 if __name__ =='__main__' :
