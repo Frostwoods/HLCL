@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:19:17
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-22 11:45:06
+# @Last Modified time: 2018-11-22 16:25:45
 """
 Descripition:
 
@@ -43,12 +43,15 @@ class Mytest(unittest.TestCase):
     
         self.assertEquals(targetCode.cal_directionOfnodeInatrajectory(trajectory).tolist(), angle_list.tolist()) 		
     
-    @data
+    @data ((np.array([np.pi*8/16,np.pi*6/16,0]),np.array([0.64,0.36,0])),\
+        (np.array([0,0,0,0]),np.array([0.25,0.25,0.25,0.25])))
     @unpack
-    def test_prob_node(self):
+    def test_prob_node_byangle(self,anglearray,parray):
+        self.asserAlmostEqual(targetCode.prob_node_byangle(anglearray),parray,2)
 
     def test_propose_splits(self):    
         #alomost equal  去看高概率的是否多出现 
+        pass
 
 if __name__ =='__main__' :
     pandasDataAnalysisSuit = unittest.TestLoader().loadTestsFromTestCase(Mytest)

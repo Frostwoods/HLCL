@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-21 19:05:09
+# @Last Modified time: 2018-11-22 15:36:53
 """
 Descripition:
 
@@ -35,15 +35,17 @@ class search_substrokes():
     def __call__(self):
         pass
 
-class propose_splits():
+def sample_splits():
     #input
     pass
 
-def prob_node():
-#1	
-    pass
+def prob_node_byangle(anglearray,baseline=0.001):
+#1	input:  output
+    p_array=np.square(anglearray)+baseline
+    return p_array/p_array.sum()
+    
 def cal_directionOfnodeInatrajectory(trajectory,jumpnum=1):
-    #inuput n*2list
+    #inuput n*2array 
 
     v1_list=[trajectory[i]-trajectory[i-jumpnum] for i in range(jumpnum,trajectory.shape[0]-jumpnum)]
     v2_list=[trajectory[i+jumpnum]-trajectory[i] for i in range(jumpnum,trajectory.shape[0]-jumpnum)]
