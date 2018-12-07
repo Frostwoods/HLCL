@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-12-07 21:38:13
+# @Last Modified time: 2018-12-07 22:39:00
 """
 Descripition:
 
@@ -62,6 +62,10 @@ def cal_angles_two_vectors(v1,v2):
 #2   
     return abs(np.angle(complex(v1[0],v1[1])\
              /complex(v2[0],v2[1])))
+def proposeSplits(propose):
+    splitIndex=np.where(propose)[0]
+    
+    return
 
 def proposeMerges(propose):
 
@@ -74,14 +78,15 @@ def proposeMerges(propose):
 def poposeWiggles(propose):
     #input 1*n np.array(boolen)
     #output nsap*n 
+    #！！rejection undone
     splitIndex=np.where(propose)[0]
     spt=splitIndex[1:-1]
     wigglepropose=np.tile(propose,(spt.size,1))
-    for n in range(spt.size):
-        
+    for n in range(spt.size):      
         wigglepropose[n][spt[n]]=False
         shift=sampleShiftForWiggles()
         wigglepropose[n][spt[n]+shift]=True
+
     return wigglepropose
 
 def sampleShiftForWiggles(sigma_wiggle=3)
@@ -94,10 +99,20 @@ def sampleShiftForWiggles(sigma_wiggle=3)
 
 
 
-def propose_replace():
+def propose_replace(propose):
     #delete a existed node and resample one by proposesplit
+    splitIndex=np.where(propose)[0]
+    spt=splitIndex[1:-1]
+    wigglepropose=np.tile(propose,(spt.size,1))
+
     pass
 
+def make_parse(traj,hyp)
+    spt=np.where(hyp)[0]
+    nsub=spt-1
+    S=[tarj[spt[i]:spt[i+1]] for i in range(nsub)]
+    IDX=[range(spt[i],spt[i+1]) for i in range(nsub)]
+    return S,IDX
     '''
 def propose_wiggles():
     pass
