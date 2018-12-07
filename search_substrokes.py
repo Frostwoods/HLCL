@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-23 13:27:53
+# @Last Modified time: 2018-12-07 21:38:13
 """
 Descripition:
 
@@ -17,6 +17,7 @@ Change Activity:
 
 """
 import numpy as np
+from scipy.stats import norm
 '''
 class toy_stroke():
     pass
@@ -61,14 +62,46 @@ def cal_angles_two_vectors(v1,v2):
 #2   
     return abs(np.angle(complex(v1[0],v1[1])\
              /complex(v2[0],v2[1])))
-'''
-def propose_merges():
 
+def proposeMerges(propose):
+
+    splitIndex=np.where(propose)[0]
+    spt=splitIndex[1:-1]
+    meragedpropose=np.tile(propose,(spt.size,1))
+    for n in range(spt.size):
+        meragedpropose[n][spt[n]]=False
+    return meragedpropose   
+def poposeWiggles(propose):
+    #input 1*n np.array(boolen)
+    #output nsap*n 
+    splitIndex=np.where(propose)[0]
+    spt=splitIndex[1:-1]
+    wigglepropose=np.tile(propose,(spt.size,1))
+    for n in range(spt.size):
+        
+        wigglepropose[n][spt[n]]=False
+        shift=sampleShiftForWiggles()
+        wigglepropose[n][spt[n]+shift]=True
+    return wigglepropose
+
+def sampleShiftForWiggles(sigma_wiggle=3)
+     sd=int(sigma_wiggle)
+     x=np.append(np.arange(-3*sd-1,1),no.arange(0,3*sd))
+     py=norm.pdf(x,0,sd)
+     py=py/py.sum()
+     indx=np.random.choice(range(py.size),1,p=p)[0]
+    return int(x[indx])
+
+
+
+def propose_replace():
+    #delete a existed node and resample one by proposesplit
     pass
+
+    '''
 def propose_wiggles():
     pass
-def propose_replace():
-    pass
+
 
 def fit_bspline(trajectory):
 

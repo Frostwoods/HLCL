@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:19:17
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-11-23 13:42:10
+# @Last Modified time: 2018-12-07 19:51:58
 """
 Descripition:
 
@@ -48,9 +48,9 @@ class Mytest(unittest.TestCase):
         (np.array([0,0,0,0]),np.array([0.25,0.25,0.25,0.25])))
     @unpack
     def test_prob_node_byangle(self,anglearray,parray):
-        print targetCode.prob_node_byangle(anglearray)
+        #print targetCode.prob_node_byangle(anglearray)
         self.assertTrue(np.all(np.isclose(targetCode.prob_node_byangle(anglearray),parray)))
-    
+        [self.assertTrue(i<5) for i in range(8)]
     @data ((4,1),(8,2),(12,3))
     @unpack
     def testSampleSplits(self,testlen,limit):
@@ -68,13 +68,31 @@ class Mytest(unittest.TestCase):
         dis=[splitIndex[i+1]-splitIndex[i] for i in range(2)]
         print dis
         self.assertTrue(np.all(dis>=limit))    
+    #@data input tlen boolean 
+    #       output  m*tlen boolean m,splitsnum in tlen
+    
+    #input 1*n a propose
+    #output m*n every possibleplace
+    @data(([1,0,1,0,0,1,0,1],([[1,0,0,0,0,1,0,1],[1,0,1,0,0,0,0,1]])),\
+            (([1,0,0,1,0,0,1,0,1,0,0,0,1]),([[1,0,0,0,0,0,1,0,1,0,0,0,1],\
+                [1,0,0,1,0,0,0,0,1,0,0,0,1],[1,0,0,1,0,0,1,0,0,0,0,0,1]])
+            ))
+    @unpack
+    def testProposeMerges(self,propose,mergedpropose):
+        self.assertTrue(np.all(targetCode.proposeMerges(propose)==mergedpropose))
+        [print(p) for p in targetCode.proposeMerges(propose)]
+    @data ([1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1])
+    @unpack
+    def testProposeWiggle(self,propose):
+        wigglePropose=targetCode.poposeWiggles(propose,asamp)
+        self.assertTrue(wigglePropose.shape[0]<=asamp)
+        [self.assertEqual(np.where((wigp==propose)==False)[0].size,2) for wigp in wigglePropose ]
 
-
-    def test_propose_splits(self):    
-        #alomost equal  去看高概率的是否多出现
-
-        pass
-
+    @data ([1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1])
+    @unpack
+    def testProposeRepalce(self,propose):    
+        [self.assertTrue(i>3) for i in range(8)]
+        
 if __name__ =='__main__' :
     pandasDataAnalysisSuit = unittest.TestLoader().loadTestsFromTestCase(Mytest)
     unittest.TextTestRunner(verbosity = 2).run(pandasDataAnalysisSuit) 
