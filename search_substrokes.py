@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-12-07 22:39:00
+# @Last Modified time: 2018-12-11 11:33:54
 """
 Descripition:
 
@@ -75,7 +75,8 @@ def proposeMerges(propose):
     for n in range(spt.size):
         meragedpropose[n][spt[n]]=False
     return meragedpropose   
-def poposeWiggles(propose):
+
+def poposeWiggles(propose,sigma_wiggle=3):
     #input 1*n np.array(boolen)
     #output nsap*n 
     #！！rejection undone
@@ -84,18 +85,19 @@ def poposeWiggles(propose):
     wigglepropose=np.tile(propose,(spt.size,1))
     for n in range(spt.size):      
         wigglepropose[n][spt[n]]=False
-        shift=sampleShiftForWiggles()
+        shift=sampleShiftForWiggles(sigma_wiggle)
         wigglepropose[n][spt[n]+shift]=True
 
     return wigglepropose
 
-def sampleShiftForWiggles(sigma_wiggle=3)
-     sd=int(sigma_wiggle)
-     x=np.append(np.arange(-3*sd-1,1),no.arange(0,3*sd))
-     py=norm.pdf(x,0,sd)
-     py=py/py.sum()
-     indx=np.random.choice(range(py.size),1,p=p)[0]
-    return int(x[indx])
+def sampleShiftForWiggles(sigma_wiggle=3):
+    sd=int(sigma_wiggle)
+    x=np.append(np.arange(-3*sd,0),np.arange(1,3*sd+1))
+    py=norm.pdf(x,0,sd)
+    py=py/py.sum()
+    indx=np.random.choice(range(py.size),1,p=py)[0]
+    
+    return x[indx]
 
 
 
@@ -107,7 +109,7 @@ def propose_replace(propose):
 
     pass
 
-def make_parse(traj,hyp)
+def make_parse(traj,hyp):
     spt=np.where(hyp)[0]
     nsub=spt-1
     S=[tarj[spt[i]:spt[i+1]] for i in range(nsub)]

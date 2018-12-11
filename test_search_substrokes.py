@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:19:17
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-12-07 19:51:58
+# @Last Modified time: 2018-12-11 12:37:50
 """
 Descripition:
 
@@ -50,7 +50,7 @@ class Mytest(unittest.TestCase):
     def test_prob_node_byangle(self,anglearray,parray):
         #print targetCode.prob_node_byangle(anglearray)
         self.assertTrue(np.all(np.isclose(targetCode.prob_node_byangle(anglearray),parray)))
-        [self.assertTrue(i<5) for i in range(8)]
+        
     @data ((4,1),(8,2),(12,3))
     @unpack
     def testSampleSplits(self,testlen,limit):
@@ -59,14 +59,14 @@ class Mytest(unittest.TestCase):
         #随机性检验  
         unNormP=np.random.rand(testlen)
         NormP=unNormP/unNormP.sum()
-        print NormP.sum()
+        #print NormP.sum()
         #NormP=np.array([0.5,0.4,0.05,0.05])
         SubProp=targetCode.sampleSplits(NormP,limit=limit)
-        print SubProp
+        #print SubProp
         splitIndex=np.where(SubProp)[0]
         self.assertEqual(splitIndex.size,3)
         dis=[splitIndex[i+1]-splitIndex[i] for i in range(2)]
-        print dis
+       # print dis
         self.assertTrue(np.all(dis>=limit))    
     #@data input tlen boolean 
     #       output  m*tlen boolean m,splitsnum in tlen
@@ -80,19 +80,45 @@ class Mytest(unittest.TestCase):
     @unpack
     def testProposeMerges(self,propose,mergedpropose):
         self.assertTrue(np.all(targetCode.proposeMerges(propose)==mergedpropose))
-        [print(p) for p in targetCode.proposeMerges(propose)]
-    @data ([1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1])
+       # [print(p) for p in targetCode.proposeMerges(propose)]
+    
+    @data((2,10000),(3,10000))
     @unpack
-    def testProposeWiggle(self,propose):
-        wigglePropose=targetCode.poposeWiggles(propose,asamp)
-        self.assertTrue(wigglePropose.shape[0]<=asamp)
+    def testsampleShiftForWiggles(self,sigma,nsap):
+        shiftlist=[targetCode.sampleShiftForWiggles(sigma) for i in range(nsap)]
+    
+        shiftelement=list(set(shiftlist))
+        shiftelement.sort()
+
+        shiftcount=[shiftlist.count(i) for i in shiftelement]
+
+        shiftp=np.array(shiftcount)*1.0
+        shiftp=shiftp/shiftp.sum()
+        maxpid=np.where(shiftp==np.max(shiftp))[0]
+        print shiftelement
+        print maxpid,shiftelement[maxpid[0]]
+        maxshift=np.max(shiftelement)
+        minshift=np.min(shiftelement)
+        
+        self.assertTrue(maxshift<=3*sigma)
+        self.assertTrue(minshift>=-3*sigma)
+        self.assertEquals(abs(shiftelement[maxpid[0]]),1)
+
+
+    @data (((1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1),3),((1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1),2))
+    @unpack
+    def testProposeWiggle(self,propose,Sigma):
+        
+        wigglePropose=targetCode.poposeWiggles(propose,Sigma)
+        #self.assertTrue(wigglePropose.shape[0]<=asamp)
         [self.assertEqual(np.where((wigp==propose)==False)[0].size,2) for wigp in wigglePropose ]
 
     @data ([1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1])
     @unpack
     def testProposeRepalce(self,propose):    
-        [self.assertTrue(i>3) for i in range(8)]
-        
+        #[self.assertTrue(i>3) for i in range(8)]
+        pass
+
 if __name__ =='__main__' :
     pandasDataAnalysisSuit = unittest.TestLoader().loadTestsFromTestCase(Mytest)
     unittest.TextTestRunner(verbosity = 2).run(pandasDataAnalysisSuit) 
