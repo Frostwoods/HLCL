@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:18:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-12-11 11:33:54
+# @Last Modified time: 2018-12-19 16:10:23
 """
 Descripition:
 
@@ -18,6 +18,7 @@ Change Activity:
 """
 import numpy as np
 from scipy.stats import norm
+import copy
 '''
 class toy_stroke():
     pass
@@ -36,15 +37,15 @@ class search_substrokes():
     def __call__(self):
         pass
 '''
-def sampleSplits(p_array,limit=5):
+def sampleSplitbyp(p_array,limit=5):
     subPropose=np.zeros(p_array.size)
     newP=p_array
     newP[:limit]=0
     newP[-limit:]=0
     split=np.random.choice(range(p_array.size),1,p=newP/newP.sum())[0]
-    subPropose[0],subPropose[-1],subPropose[split]=1,1,1
-    return subPropose==1
-
+    #subPropose[0],subPropose[-1],subPropose[split]=1,1,1
+    #return subPropose==1
+    return split
 def prob_node_byangle(anglearray,baseline=0.001):
 #1	input:  output
     p_array=np.square(anglearray)+baseline
@@ -59,22 +60,18 @@ def cal_directionOfnodeInatrajectory(trajectory,jumpnum=1):
 
 def cal_angles_two_vectors(v1,v2):
 
-#2   
     return abs(np.angle(complex(v1[0],v1[1])\
              /complex(v2[0],v2[1])))
-def proposeSplits(propose):
-    splitIndex=np.where(propose)[0]
-    
-    return
+
 
 def proposeMerges(propose):
 
     splitIndex=np.where(propose)[0]
     spt=splitIndex[1:-1]
-    meragedpropose=np.tile(propose,(spt.size,1))
+    meragedproposes=np.tile(propose,(spt.size,1))
     for n in range(spt.size):
-        meragedpropose[n][spt[n]]=False
-    return meragedpropose   
+        meragedproposes[n][spt[n]]=False
+    return meragedproposes 
 
 def poposeWiggles(propose,sigma_wiggle=3):
     #input 1*n np.array(boolen)
@@ -99,22 +96,51 @@ def sampleShiftForWiggles(sigma_wiggle=3):
     
     return x[indx]
 
+def proposeSplits(traj,propose,nsamp):
+    splitedproposes=[proposeASplit(traj,propose) for i in range(nsamp)]
+    return list(set(splitedproposes))
+def proposeASplit(traj,propose):
+    splitpropose=copy.deepcopy(propose)
+    S,Idx=make_parse(traj,propose)
+    bid=np.randomchoice(range(len(S)))
+    subtrj=S(bid)
+    sptid=sampleSplitInSubtraj(subtrj)
+    splitpropose[Idx[bid][sptid]]=true
+    return splitpropose
 
-
-def propose_replace(propose):
+def sampleSplitInSubtraj(subtrj):
+    anglearray=cal_directionOfnodeInatrajectory(subtrj,jumpnum=3)
+    p_array=prob_node_byangle(anglearray,baseline=0.001)
+    split=sampleSplitbyp(p_array,limit=5)
+    return split
+def proposeReplaces(traj,propose):
     #delete a existed node and resample one by proposesplit
+    #sample a split to replace
     splitIndex=np.where(propose)[0]
     spt=splitIndex[1:-1]
-    wigglepropose=np.tile(propose,(spt.size,1))
+    replaceproposes=np.tile(propose,(spt.size,1))
+    
+    for n in range(spt.size):      
+        replaceproposes[n][spt[n]]=False
+        S,Idx=make_parse(traj,replaceproposes[n])
+        subtraj=S[n]
+        sptid=sampleSplitInSubtraj(subtrj)
+        replaceproposes[Idx[n][sptid]]=true
+    #  rpl=np.random.choice(range(len(spt)))
+    #replacepropose[spt[rpl]]=false
+    #wigglepropose=np.tile(propose,(spt.size,1))
+    #S,Idx=make_parse(traj,propose)
+    #subtraj=S[rpl]
+    #sptid=sampleSplitInSubtraj(subtrj)
+    #replacepropose[Idx[bid][sptid]]=true
+    return replaceproposes
 
-    pass
-
-def make_parse(traj,hyp):
+def makeParse(traj,hyp):
     spt=np.where(hyp)[0]
-    nsub=spt-1
-    S=[tarj[spt[i]:spt[i+1]] for i in range(nsub)]
-    IDX=[range(spt[i],spt[i+1]) for i in range(nsub)]
-    return S,IDX
+    nsub=spt.size-1
+    S=[traj[spt[i]:spt[i+1]] for i in range(nsub)]
+    Idx=[range(spt[i],spt[i+1]) for i in range(nsub)]
+    return S,Idx
     '''
 def propose_wiggles():
     pass
