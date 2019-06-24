@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2017-12-21 21:32:13
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-03-11 17:56:16
+# @Last Modified time: 2019-06-16 19:40:39
 """
 Descripition:
 
@@ -95,7 +95,7 @@ def main():
 	#creat picture
 	type_list=[gen_typechar() for i in range[sampletime]]
 
-	img_list=[gen_tokne(t) for t in type_list]
+	img_list=[gen_token(t) for t in type_list]
 	
 	[img_save(img_list[i],i) for i in range(sampletime)]
 

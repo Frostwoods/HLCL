@@ -5,7 +5,7 @@
 # @Emial: frostwoods@foxmail.com
 # @Date:   2018-11-13 13:19:17
 # @Last Modified by:   Yang Zhao
-# @Last Modified time: 2018-12-19 15:56:52
+# @Last Modified time: 2018-12-19 16:25:34
 """
 Descripition:
 
@@ -134,7 +134,7 @@ class Mytest(unittest.TestCase):
     def testMakeParse(self,traj,propose):
         self.setUP()
         S,Idx=targetCode.makeParse(self.faketraj,self.fakepropose)
-        print S,Idx
+        #pprint S,Idx
 
 
 if __name__ =='__main__' :
