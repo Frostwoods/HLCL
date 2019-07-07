@@ -1,41 +1,26 @@
 
-# -*- coding: utf-8 -*-
-# @Poroject Name: HLCL
-# @File Name: CPD.py
-# @Author: Yang Zhao
-# @Emial: frostwoods@foxmail.com
-# @Date:   2019-04-16 18:34:12
-# @Last Modified by:   Yang Zhao
-# @Last Modified time: 2019-06-11 15:56:26
-"""
-Descripition:
-
-
-
-Change Activity:
-
-
-
-"""
 from scipy.stats import  binom,norm,gamma,multivariate_normal,norm,multinomial,dirichlet
 import numpy as np
 from random import uniform
 
-def sampleNumber(pkappa,nsamp=1):
-	for x in xrange(0, nsamp):
-            onesample = multinomial.rvs(1 , pkappa)
-            samps[x] = np.where(onesample == 1)[0]   
-        return samps
-	return samps
+#stroke number
+def sampleNumber(pKappa,nSamp=1):
+    # samps=[]
+    # for x in xrange(0, nSamp):
+    #     oneSample = multinomial.rvs(1 , pKappa)
+    #     samps.append(np.where(oneSample == 1)[0]+1) #plus 1,correct for python index           
+    samps=[np.where(multinomial.rvs(1, pKappa) == 1)[0]+1 for x in xrange(0, nSamp)]
 
-def scoreNumber(pkappa,data):
+    return np.array(samps).T[0]
 
-	return np.log(pkappa(data))
+def CalStrokeNumberLikelyhood(pKappa,data):
+	return np.array([np.log(pKappa[i-1]) for i in data])#minus 1,correct for python index 
+	# return np.log(pKappa(np.array(data)-1))
 
-def sampleNsub(ns,nsubdata):
-	nsub=np.where(multinomial.rvs(1 , nsubdata[ns])==1)[0]
-
-	return nsub
+#substroke number and id
+def sampleNsub(strokeIndex,substrokeNumberP):
+	substrokeNumber=np.where(multinomial.rvs(1 , substrokeNumberP[strokeIndex])==1)[0]
+	return substrokeNumber
 def sampleSequence(markovT,logstart,ns,nsub,nsamp=1):
 	sq=[]
 	for x in xrange(0, nsamp):
@@ -45,22 +30,26 @@ def sampleSequence(markovT,logstart,ns,nsub,nsamp=1):
 			cursq.append(np.where(multinomial.rvs(1 ,10^markovT[cursq[-1]])==1)[0])
 		sq.append(cursq)
 	return sq
-def scoreSequence(markovT,logstart,nsubdata ,sequence,ns):
+
+
+
+def calSubstrokeSequenceLikelyhood(markovT,logstart,nsubdata ,sequence,ns):
 	nsub=len(sequence)
-	sz=nsubdata.shape
+	size=nsubdata.shape
 	if ns <0:
-		lp=0
-	elif ns>sz[0] || nsub>sz[1]:
-		lp=-np.inf
+		score=0
+	elif ns>size[0] | nsub>size[1]:
+		score=-np.inf
 	else:
-		lp=np.log(nsubdata[ns][sequence])
+		score=np.log(nsubdata[ns][sequence])
 	lv=[]
 	lv.append(logstart[sequence[0]])
 	for y in xrange(1,nsub):
 		lv.append(markovT[sequence[y-1][sequence[y]]])
-	score=lp+np.array(lv).sum
+	score=score+np.array(lv).sum
 	return score
 
+#substrokes shape
 def sampleShapeType(shapemu,shapesigma,subids):
 	bsplinestack=[]
 	lenth=len(subids)
@@ -68,11 +57,10 @@ def sampleShapeType(shapemu,shapesigma,subids):
 		cpt=multivariate_normal.rvs(shapemu[:,:,id],shapesigma[:,:,id],1)
 		bsplinestack.append(cpt.reshape((-1,2,lenth)))
 	return bsplinestack
-def scoreShapeType(shapemu,shapesigma,bsplinestack,subids,regcov):
-	
+
+def scoreShapeType(shapemu,shapesigma,bsplinestack,subids,regcov):	
 	score = scoreShapeTypehelper(shapemu,shapesigma,bsplinestack,subids,regcov)
 	return score
-
 def scoreShapeTypehelper(shapemu,shapesigma,bsplinestack,subids,regcov=0):
 	scorelist=[]
 	size=len(subids)
@@ -83,27 +71,25 @@ def scoreShapeTypehelper(shapemu,shapesigma,bsplinestack,subids,regcov=0):
 	return np.array(scorelist).sum()
 def sampleShapeToken(tokenshapesigma,bsplinestack):
 	#bspline_stack: (ncpt x 2 x k) shapes of bsplines 
-	sz=bsplinestack.shape
+	size=bsplinestack.shape
 	bsplinestacktoken=bsplinestack+\
-			tokenshapesigma*np.random.randn(sz[0],sz[1],sz[2])
+			tokenshapesigma*np.random.randn(size[0],size[1],size[2])
 	return bsplinestacktoken
 def scoreShapeToken(shapesigma,bsplinestacktoken,bsplinestacktype):
 	#spline_stack_type: (ncpt x 2 x k) shapes of bsplines
-    #bspline_stack_token: (ncpt x 2 x k) shapes of bsplines
-    
-    sizek=bsplinestacktype.shape[2]
-    scorelist=[]
-    for i in range(sizek)
-    	x=bsplinestacktoken[:,:,i].reshape(1,-1)[0]
-    	mean=bsplinestacktype[:,:,i].reshape(1,-1)[0]
-    	sd=shapesigma*np.ones(mean.size)
+	#bspline_stack_token: (ncpt x 2 x k) shapes of bsplines
+	sizek=bsplinestacktype.shape[2]
+	scorelist=[]
+	for i in range(sizek):
+		x=bsplinestacktoken[:,:,i].reshape(1,-1)[0]
+		mean=bsplinestacktype[:,:,i].reshape(1,-1)[0]
+		sd=shapesigma*np.ones(mean.size)
 		cpt=multivariate_normal.logpdf(x,mean,sd)
 		scorelist.append(cpt)
-
 	return cpt.sum()
 
 
-def scoreShapeMarginalize(shapemu,shapesigma,bsplinestacktoken,subids,regcov=tokenshapesigma^2):
+def scoreShapeMarginalize(shapemu,shapesigma,bsplinestacktoken,subids,regcov):#regcov=tokenshapesigma^2
 	score = scoreShapeTypehelper(shapemu,shapesigma,bsplinestacktoken,subids,regcov)
 	return score
 
@@ -146,55 +132,55 @@ def scoreInvscaleToken(sigmainvscale,invscalestype,invscalestoken):
 	return scorelist
 
 
-def sampleRelationType(relationmixprob,previousstrokes):
-	#R={} R['nprev'] R['type']
+# def sampleRelationType(relationmixprob,previousstrokes):
+# 	#R={} R['nprev'] R['type']
 
-	nprev=len(previousstrokes)
-	relationtypes = ('unihist','start','end','mid')
-	if nprev==0:
-		indx=1
-	else:
-		indx=np.where(multinomial.rvs(1 ,relationmixprob)==1)[0]
+# 	nprev=len(previousstrokes)
+# 	relationtypes = ('unihist','start','end','mid')
+# 	if nprev==0:
+# 		indx=1
+# 	else:
+# 		indx=np.where(multinomial.rvs(1 ,relationmixprob)==1)[0]
 	
-	if relationtypes[indx]=='unihist':
+# 	if relationtypes[indx]=='unihist':
 
 
-	elif:relationtypes[indx] in ('start','end')
+# 	elif relationtypes[indx] in ('start','end'):
 
-	elif:relationtypes[indx]=='mid':
+# 	elif relationtypes[indx]=='mid':
 
-	else：
-		print 'norelation'
+# 	else：
+# 		print 'norelation'
 	
-	return R
+# 	return R
 
-def scoreRelationType(relationmixprob,R):
-	strokenum=R['nprev']+1
-	relationtypes = ('unihist','start','end','mid')
-	logp=np.log(relationmixprob)
-	if strokenum>1:
-		indx=relationtypes.index(R['type'])
-		score=logp(indx)
-	else:
-		score=0
+# def scoreRelationType(relationmixprob,R):
+# 	strokenum=R['nprev']+1
+# 	relationtypes = ('unihist','start','end','mid')
+# 	logp=np.log(relationmixprob)
+# 	if strokenum>1:
+# 		indx=relationtypes.index(R['type'])
+# 		score=logp(indx)
+# 	else:
+# 		score=0
 
-	if R['type']=='unihist':
-		#score = score + libclass.Spatial.score(R.gpos,stroke_num);
+# 	if R['type']=='unihist':
+# 		#score = score + libclass.Spatial.score(R.gpos,stroke_num);
 
-	elif:R['type'] in ('start','end')
-		score = score - log(R['nprev'])
-	elif:R['type']=='mid':
-		score = score - log(R['nprev'])
-		score = score - log(R['nsub']);
-        eval_missing = isempty(R.eval_spot_type);
-#        if ~eval_missing:
- #           ncpt = libclass.ncpt
- #           [~,lb,ub] = bspline_gen_s(ncpt,1);
-   #         ll = ll - log(ub-lb)
- #           if (R.eval_spot_type < lb || R.eval_spot_type > ub):
-     #           ll = -inf
+# 	elif R['type'] in ('start','end'):
+# 		score = score - log(R['nprev'])
+# 	elif R['type']=='mid':
+# 		score = score - log(R['nprev'])
+# 		score = score - log(R['nsub'])
+#         eval_missing = isempty(R.eval_spot_type)
+# #        if ~eval_missing:
+#  #           ncpt = libclass.ncpt
+#  #           [~,lb,ub] = bspline_gen_s(ncpt,1);
+#    #         ll = ll - log(ub-lb)
+#  #           if (R.eval_spot_type < lb || R.eval_spot_type > ub):
+#      #           ll = -inf
                  	
-	return score
+	# return score
 def sampleRelationToken():
 	
 	pass
@@ -209,7 +195,7 @@ def scorePosition():
 def sampleImageBlur(minblursigma,maxblursigma):
 	return uniform(minblursigma,maxblursigma)
 def scoreImageBlur(minblursigma,maxblursigma,blursigma):
-	if blursigma<minblursigma or blursigma>maxblursigma
+	if blursigma<minblursigma or blursigma>maxblursigma:
 		score=-np.inf
 	else:
 		score=-np.log(maxblursigma-minblursigma)
@@ -217,7 +203,7 @@ def scoreImageBlur(minblursigma,maxblursigma,blursigma):
 def sampleImageNoise(minepsilon,maxepsilon):
 	return uniform(minepsilon,maxepsilon)
 def scoreImageNoise(minepsilon,maxepsilon,epsilon):
-	if epsilon<minepsilon or epsilon>maxepsilon
+	if epsilon<minepsilon or epsilon>maxepsilon:
 		score=-np.inf
 	else:
 		score=-np.log(maxepsilon-minepsilon)
@@ -228,8 +214,8 @@ def sampleImage(pimg):
 def scoreImage(I,pimg):
 	probon = pimg;
 	on = I>0.5
-    off = I<0.5
-    score=np.log(probon[on]).sum()+np.log(1-probon(off)).sum()
+	off = I<0.5
+	score=np.log(probon[on]).sum()+np.log(1-probon(off)).sum()
 	return score
 def sampleAffine():
 	pass

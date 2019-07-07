@@ -4,8 +4,8 @@
 # @Author: Yang Zhao
 # @Emial: frostwoods@foxmail.com
 # @Date:   2019-06-03 13:12:08
-# @Last Modified by:   Yang Zhao psy
-# @Last Modified time: 2019-06-24 01:55:45
+# @Last Modified by:   Yang Zhao
+# @Last Modified time: 2019-07-07 16:49:43
 """
 Descripition:
 	Input:image
@@ -27,34 +27,81 @@ import networkx as nx
 
 
 
-def extractSkeleton(image):
+def extractSkeleton(image,makeThin,extractJunctions,traceGraph):	
 	thinImage = makeThin(image)
 	junctionImage = extractJunctions(thinImage)
 	characterGraph = traceGraph(thinImage, junctionImage, image)
 	return characterGraph
 
+#callable class style
+class MakeThinImage():
+	"""docstring for ClassName"""
+	def __init__(self,fillLut,thinLut1,thinLut2,otsuThreshold,lutSize,iterTime):
+		self.fillLut=fillLut    
+		self.thinLut1=thinLut1
+		self.thinLut2=thinLut2
+		self.lutSize=lutSize
+		self.iterTime=iterTime
+		self.otsuThreshold=otsuThreshold
+	def  __call__(self,image):
+		binaryImage = image < self.otsuThreshold
+		skelentonImage = ndimage.generic_filter(binaryImage, self.filLut, size=self.lutSize)    
+		for i in range(self.iterTime):
+			skelentonImage=ndimage.generic_filter(skelentonImage, self.thinLut1, size=self.lutSize)
+			skelentonImage=ndimage.generic_filter(skelentonImage, self.thinLut2, size=self.lutSize)
+		return skelentonImage
+#function style
+# class MakeThinImage():
+# 	"""docstring for ClassName"""
+# 	def __init__(self,
+# 				 fillLutPath,
+# 				 thinLut1Path,
+# 				 thinLut2Path,
+# 				 otsuThreshold,
+# 				 lutSize,
+# 				 iterTime):
+# 		self.fillLut=MakeLut(fillLutPath)    
+# 		self.thinLut1=MakeLut(thinLut1Path)
+# 		self.thinLut2=MakeLut(thinLut2Path)
+# 		self.lutSize=lutSize
+# 		self.iterTime=iterTime
+# 		self.otsuThreshold=otsuThreshold
+# 	def  __call__(self,image):
+# 		binaryImage = image < self.otsuThreshold
+# 		skelentonImage = ndimage.generic_filter(binaryImage, self.filLut, size=lutSize)    
+# 		for i in range(self.iterTime):
+# 			skelentonImage=ndimage.generic_filter(skelentonImage, self.thinLut1, size=lutSize)
+# 			skelentonImage=ndimage.generic_filter(skelentonImage, self.thinLut2, size=lutSize)
+# 		return skelentonImage
+#function style
+# def makeThin(image,
+# 			 fillLutPath='F:/Code/Matlab/HLCL/data/prepocessLut/lutfill.mat',
+# 			 thinLut1Path='F:/Code/Matlab/HLCL/data/prepocessLut/lutthin1.mat',
+# 			 thinLut2Path='F:/Code/Matlab/HLCL/data/prepocessLut/lutthin2.mat',
+# 			 otsuThreshold=0.577,
+# 			 lutSize=(3,3),
+# 			 iterTime=10):
+   
+#     filLut=MakeLut(fillLutPath)    
+#     thinLut1=MakeLut(thinLut1Path)
+#     thinLut2=MakeLut(thinLut2Path)
+   
+#     binaryImage = image < otsuThreshold
+#     skelentonImage = ndimage.generic_filter(binaryImage, filLut, size=lutSize)    
+#     for i in range(iterTime):
+#     	skelentonImage=ndimage.generic_filter(skelentonImage, thinLut1, size=lutSize)
+#     	skelentonImage=ndimage.generic_filter(skelentonImage, thinLut2, size=lutSize)
+#     return skelentonImage
 
-def makeThin(image,
-			 fillLutPath='F:/Code/Matlab/HLCL/data/lutfill.mat',
-			 thinLut1Path='F:/Code/Matlab/HLCL/data/lutthin1.mat',
-			 thinLut2Path='F:/Code/Matlab/HLCL/data/lutthin2.mat',
-			 otsuThreshold=0.577,
-			 lutSize=(3,3),
-			 iterTime=10):
-   
-    filLut=MakeLut(fillLutPath)    
-    thinLut1=MakeLut(thinLut1Path)
-    thinLut2=MakeLut(thinLut2Path)
-   
-    binaryImage = image < otsuThreshold
-    skelentonImage = ndimage.generic_filter(binaryImage, filLut, size=lutSize)    
-    for i in range(iterTime):
-    	skelentonImage=ndimage.generic_filter(skelentonImage, thinLut1, size=lutSize)
-    	skelentonImage=ndimage.generic_filter(skelentonImage, thinLut2, size=lutSize)
-    return skelentonImage
+class ExtractJunctions(object):
+	"""docstring for ClassName"""
+	def __init__(self, arg):
+		super(ClassName, self).__init__()
+		self.arg = arg
+		
 
 def extractJunctions(thinImage,
-					 endPointLutPath='F:/Code/Matlab/HLCL/data/lutendpoint.mat',
+					 endPointLutPath='F:/Code/Matlab/HLCL/data/prepocessLut/lutendpoint.mat',
 					 lutSize=(3,3)):
 
     findEndLut = MakeLut(path=endPointLutPath)
@@ -65,9 +112,9 @@ def extractJunctions(thinImage,
     S3 = ndimage.generic_filter(thinImage, fS3, size=lutSize)
 
     junctionImage = SE | (SB & S3);
-
+ 
     from scipy.ndimage import label
-    labeled, n = label(thinImage, np.ones((3,3)))
+    labeled, n = label(thinImage, np.ones(lutSize))
     for i in range(1,n+1):
         pid= (labeled==i)
         if (junctionImage[pid].sum()) == 0:
