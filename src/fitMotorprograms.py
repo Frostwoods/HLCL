@@ -2,18 +2,18 @@
 from classes.extractSkeleton import *
 def fitMotorprograms(I,K,verbose,includemcmc,fastmode):	
 
-	initMP=generateRandomPrase(I,lib,K,verbose)
+	initMotorProgram=generateRandomPrase(I,lib,K,verbose)
 
-	initscores=[scoreMPNoRel(MP) for MP in initMP]	
+	initscores=[scoreMPNoRel(MP) for MP in initMotorProgram]	
 
-	finalMP=[searchForParse(MP,lib,verbose,fast_mode) \
-			for MP in initMP]
-	finalscores=[scoreMPNoRel(MP) for MP in finalMP]
+	finalMotorProgram=[searchForParse(MP,lib,verbose,fast_mode) \
+			for MP in initMotorProgram]
+	finalscores=[scoreMPNoRel(MP) for MP in finalMotorProgram]
 	if verbose:
 		pass #visual
 
 	if includemcmc:
-		samplestype = [runMCMCType(MP,*arg) for MP in finalMP]
+		samplestype = [runMCMCType(MP,*arg) for MP in finalMotorProgram]
 
 	G={}
 	G['models']=finalMP
